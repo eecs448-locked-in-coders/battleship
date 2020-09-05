@@ -13,13 +13,18 @@ class Executive {
 	}
 	
 	renderBoards() {
-		this.board0.render(document.getElementById("board0"), !this.turn);
-		this.board1.render(document.getElementById("board1"), this.turn);
+		this.board0.render(document.getElementById("board0"), !this.turn, this);
+		this.board1.render(document.getElementById("board1"), this.turn, this);
+	}
+	
+	setNumShips() {
 	}
 	
 	switchTurns() {
 	}
 	
-	clickSpace(board, x, y) {
+	clickSpace(cell) {
+		cell.isHit = true;
+		this.renderBoards();
 	}
 }

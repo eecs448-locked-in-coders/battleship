@@ -7,7 +7,7 @@ class Board {
 		for (let row = 0; row < rows; row++) {
 			this.cells[row] = [];
 			for (let col = 0; col < cols; col++) {
-				this.cells[row][col] = new Space();
+				this.cells[row][col] = new Space(col, row);
 			}
 		}
 	}
@@ -15,8 +15,9 @@ class Board {
 	/**
 	* @param table The DOM element to render the board to
 	* @param showShips Boolean for whether all ship locations should be visible
+	* @param executive Object to use the clickSpace method of
 	**/
-	render(table, showShips) {
+	render(table, showShips, executive) {
 		table.innerHTML = ""; // Remove any existing cells
 		
 		// Add letter row
@@ -46,10 +47,16 @@ class Board {
 				let td = document.createElement("td");
 				if (cell.isHit) td.classList.add("hit");
 				if (cell.isHit || (showShips && cell.isShip)) td.classList.add("ship");
+				td.addEventListener("click", e => executive.clickSpace(cell));
 				tr.appendChild(td);
 			}
 			table.appendChild(tr);
 		}
+	}
+	
+	attack(x, y) {
+		this.cells[y][x].isHit = true;
+		this.checkWin();
 	}
 	
 	checkWin() {

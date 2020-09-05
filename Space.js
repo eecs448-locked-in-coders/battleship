@@ -1,5 +1,7 @@
 class Space {
-	constructor(cell) {
+	constructor(row, col) {
+		this.row = row;
+		this.col = col;
 		this.hasShip = false;
 		this.isHit = false;
 	}
