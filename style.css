@@ -1,0 +1,13 @@
+body {
+	text-align: center;
+}
+
+#board {
+	margin: auto;
+}
+
+#board td {
+	border: 1px solid blue;
+	width: 32px;
+	height: 32px;
+}
