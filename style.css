@@ -1,13 +1,38 @@
 body {
 	text-align: center;
+	background: #aaf;
 }
 
-#board {
-	margin: auto;
+.board-container {
+	display: inline-block;
+	margin: 1em;
 }
 
-#board td {
-	border: 1px solid blue;
+.player-name {
+	text-align: center;
+	font-size: 16pt;
+	width: 98%;
+}
+
+.board {
+	border-collapse: collapse;
+}
+
+.board th, .board td {
 	width: 32px;
 	height: 32px;
+	border: 1px solid white;
+}
+
+.board th {
+	background: black;
+	color: white;
+}
+
+.board td {
+	background: #44c;
+}
+
+.board td.hit {
+	background: #c11;
 }

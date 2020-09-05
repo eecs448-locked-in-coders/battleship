@@ -9,8 +9,18 @@
 		<script src="Ship.js"></script>
 	</head>
 	<body>
-		<table id="board"></table>
+		<div class="board-container">
+			<input type="text" class="player-name" value="Player 1">
+			<table class="board" id="board0"></table>
+		</div>
+		<div class="board-container">
+			<input type="text" class="player-name" value="Player 2">
+			<table class="board" id="board1"></table>
+		</div>
 		<div id="message"></div>
-		<input type="button" id="place-ships" value="Confirm ship placement">
+		<!--<input type="button" id="place-ships" value="Confirm ship placement">-->
+		<script>
+			let exec = new Executive(9, 9);
+		</script>
 	</body>
 </html>
