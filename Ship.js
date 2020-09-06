@@ -11,14 +11,14 @@ class Ship {
 		this.col = col;
 		this.isVertical = isVertical;
 	}
-	
+
 	/**
 	* @return Whether the given row, col coordinates intersect the ship
 	**/
 	isIntersecting(row, col) {
-	
+
 	}
-	
+
 	/**
 	* @return An array of (row, col) pairs of coordinates
 	**/
@@ -33,6 +33,6 @@ class Ship {
 				coords.push([this.row, this.col+i]);
 			}
 		}
-		return coords;
+		return coords; //Returns an array of all the coordinates the ship is currently occupying.
 	}
 }
