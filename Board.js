@@ -1,3 +1,6 @@
+/**
+ *@class
+ */
 class Board {
 	constructor(rows, cols) {
 		this.ships = [];
