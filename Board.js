@@ -1,6 +1,3 @@
-const ROWS = 10;
-const COLS = 10;
-
 class Board {
 	constructor(rows, cols) {
 		this.ships = [];
