@@ -31,8 +31,41 @@ body {
 
 .board td {
 	background: #44c;
+	position: relative;
+}
+
+.board td:before {
+	content: "🌫️";
 }
 
 .board td.hit {
-	background: #c11;
+	background: #cc1;
 }
+
+.board td.hit:before {
+	content: "✖️";
+}
+
+.board td.ship {
+	background: #aaa;
+}
+
+.board td.ship:before {
+	content: "⚪";
+}
+
+
+.board td.ship.hit {
+	background: #a22;
+}
+
+.board td.ship.hit:before {
+	content: "💥";
+}
+
+.board td:before {
+	position: absolute;
+	left: 0;
+	top: 6px;
+	width: 100%;
+	pointer-events: none;
