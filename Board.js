@@ -3,6 +3,7 @@ const COLS = 10;
 
 class Board {
 	constructor(rows, cols) {
+		this.ships = [];
 		this.cells = [];
 		for (let row = 0; row < rows; row++) {
 			this.cells[row] = [];
@@ -46,7 +47,7 @@ class Board {
 			for (let cell of row) {
 				let td = document.createElement("td");
 				if (cell.isHit) td.classList.add("hit");
-				if (cell.isHit || (showShips && cell.isShip)) td.classList.add("ship");
+				if ((cell.isHit || showShips) && cell.hasShip) td.classList.add("ship");
 				td.addEventListener("click", e => executive.clickSpace(cell));
 				tr.appendChild(td);
 			}
@@ -54,8 +55,19 @@ class Board {
 		}
 	}
 	
-	attack(x, y) {
-		this.cells[y][x].isHit = true;
+	// TODO: Validate coordinates are within bounds of board
+	placeShip(length, row, col, isVertical) {
+		let ship = new Ship(length, row, col, isVertical);
+		this.ships.push(ship);
+		let coords = ship.listIntersecting();
+		for (let coord of coords) {
+			this.cells[coord[0]][coord[1]].hasShip = true;
+		}
+	}
+	
+	// Currently unused
+	attack(row, col) {
+		this.cells[row][col].isHit = true;
 		this.checkWin();
 	}
 	
