@@ -35,7 +35,7 @@ class Executive {
 	}
 	
 	/**
-	* @description Used for testing gameplay before the ship placement feature is added
+	*@description Used for testing gameplay before the ship placement feature is added
 	**/
 	placeSampleShips() {
 		this.board0.placeShip(1, 1, 1, false);
