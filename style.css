@@ -34,23 +34,14 @@ body {
 }
 
 .board td {
-
 	position: relative;
 }
 
-.board td:before {
-	content: "";
-}
-
-.board td.hit {
+.board td.miss {
 	/*
 		Miss shot, yellow
 	*/
 	background-image: radial-gradient(#a5a50d 30%, #f0f042 30%, #f0f042 60%, transparent 40%);
-}
-
-.board td.hit:before {
-	content: "";
 }
 
 .board td.ship {
@@ -59,21 +50,17 @@ body {
 	*/
 	background: #7b9095;
 }
-
-.board td.ship:before {
-	content: "";
+.board td.hit{
+	/*
+		Shell hit ship, ship is hidden, red
+	*/
+	background-image: radial-gradient(#951d1d 30%, #c02626 30%, #c02626 60%, Transparent 40% ); 
 }
-
-
 .board td.ship.hit {
 	/*
-		Shell hit ship cell, red
+		Shell hit ship cell, red & grey
 	*/
 	background-image: radial-gradient(#951d1d 30%, #c02626 30%, #c02626 60%, #7b9095 40% );
-}
-
-.board td.ship.hit:before {
-	content: "";
 }
 
 .board td:before {
