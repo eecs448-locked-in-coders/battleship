@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8">
 		<title>Battleship</title>
 		<link rel="stylesheet" href="style.css">
 		<script src="Executive.js"></script>
@@ -18,9 +19,13 @@
 			<table class="board" id="board1"></table>
 		</div>
 		<div id="message"></div>
-		<!--<input type="button" id="place-ships" value="Confirm ship placement">-->
+		<input type="button" id="switch-turn" value="Switch turn">
 		<script>
-			let exec = new Executive(9, 9);
+			window.executive = new Executive(9, 9);
+			
+			// For testing
+			executive.placeSampleShips();
+			executive.renderBoards();
 		</script>
 	</body>
 </html>

@@ -10,6 +10,11 @@ class Executive {
 		this.board1 = new Board(rows, cols);
 		
 		this.renderBoards();
+		
+		document.getElementById("switch-turn").addEventListener("click", e => {
+			this.turn = !this.turn;
+			this.renderBoards();
+		});
 	}
 	
 	renderBoards() {
@@ -25,6 +30,24 @@ class Executive {
 	
 	clickSpace(cell) {
 		cell.isHit = true;
+		// TODO: Check if a ship was there
 		this.renderBoards();
+	}
+	
+	/**
+	* @description Used for testing gameplay before the ship placement feature is added
+	**/
+	placeSampleShips() {
+		this.board0.placeShip(1, 1, 1, false);
+		this.board0.placeShip(2, 4, 1, true);
+		this.board0.placeShip(3, 5, 0, true);
+		this.board0.placeShip(4, 2, 3, false);
+		this.board0.placeShip(5, 7, 3, false);
+		
+		this.board1.placeShip(1, 1, 1, true);
+		this.board1.placeShip(2, 1, 4, false);
+		this.board1.placeShip(3, 0, 5, false);
+		this.board1.placeShip(4, 3, 2, true);
+		this.board1.placeShip(5, 3, 7, true);
 	}
 }
