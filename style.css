@@ -15,7 +15,11 @@ body {
 }
 
 .board {
+	/*
+		Water background
+	*/
 	border-collapse: collapse;
+	background-image: linear-gradient(22deg, #1aa3ff 1%, #006bb3 20%, #1aa3ff 50%, #006bb3 70%, #1aa3ff 100%);
 }
 
 .board th, .board td {
@@ -30,37 +34,46 @@ body {
 }
 
 .board td {
-	background: #44c;
+
 	position: relative;
 }
 
 .board td:before {
-	content: "🌫️";
+	content: "";
 }
 
 .board td.hit {
-	background: #cc1;
+	/*
+		Miss shot, yellow
+	*/
+	background-image: radial-gradient(#a5a50d 30%, #f0f042 30%, #f0f042 60%, transparent 40%);
 }
 
 .board td.hit:before {
-	content: "✖️";
+	content: "";
 }
 
 .board td.ship {
-	background: #aaa;
+	/*
+		Ship cell, grey
+	*/
+	background: #7b9095;
 }
 
 .board td.ship:before {
-	content: "⚪";
+	content: "";
 }
 
 
 .board td.ship.hit {
-	background: #a22;
+	/*
+		Shell hit ship cell, red
+	*/
+	background-image: radial-gradient(#951d1d 30%, #c02626 30%, #c02626 60%, #7b9095 40% );
 }
 
 .board td.ship.hit:before {
-	content: "💥";
+	content: "";
 }
 
 .board td:before {
