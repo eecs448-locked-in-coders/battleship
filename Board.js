@@ -48,7 +48,7 @@ class Board {
 				let td = document.createElement("td");
 				if (cell.isHit) td.classList.add("hit");
 				if ((cell.isHit || showShips) && cell.hasShip) td.classList.add("ship");
-				td.addEventListener("click", e => executive.clickSpace(cell));
+				td.addEventListener("click", e => executive.clickSpace(cell,!showShips));
 				tr.appendChild(td);
 			}
 			table.appendChild(tr);

@@ -28,10 +28,12 @@ class Executive {
 	switchTurns() {
 	}
 	
-	clickSpace(cell) {
-		cell.isHit = true;
-		// TODO: Check if a ship was there
-		this.renderBoards();
+	clickSpace(cell,blocked) {
+		if (!blocked) {
+			cell.isHit = true;
+			// TODO: Check if a ship was there
+			this.renderBoards();
+		}
 	}
 	
 	/**
