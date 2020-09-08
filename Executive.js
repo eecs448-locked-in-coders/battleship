@@ -13,9 +13,20 @@ class Executive {
 		
 		document.getElementById("switch-turn").addEventListener("click", e => {
 			this.blankBoards();
-
-				this.turn = !this.turn;
-				this.renderBoards();
+			let modal = document.getElementById("modal");
+			modal.style.display = "block"
+			let time = 5;
+			let timer  = setInterval(() => {
+				document.getElementById("modal-content").innerHTML = "Next turn in " + time + " seconds!"; // FIX: Displays 0
+				time--;
+				if (time<0) {
+					modal.style.display = "none";
+					this.turn = !this.turn;
+					this.renderBoards();
+					clearInterval(timer);
+				}
+				},1000);
+				
 		});
 	}
 
