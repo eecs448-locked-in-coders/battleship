@@ -23,9 +23,7 @@ class Executive {
 	}
 
 	setNumShips() {
-		document.getElementById("complete").addEventListener(click, e=>{
-			this.setNumShips()=
-		});
+	
 
 	}
 
