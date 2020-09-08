@@ -16,7 +16,7 @@ body {
 
 .board {
 	/*
-		Water background
+		Water background, waves
 	*/
 	border-collapse: collapse;
 	background-image: linear-gradient(22deg, #1aa3ff 1%, #006bb3 20%, #1aa3ff 50%, #006bb3 70%, #1aa3ff 100%);
@@ -34,8 +34,10 @@ body {
 }
 
 .board td {
+	background-image: radial-gradient(rgba(128,128,128,0.7) 30%, transparent 30%, transparent 100%);
 	position: relative;
 }
+
 
 .board td.miss {
 	/*
@@ -54,7 +56,7 @@ body {
 	/*
 		Shell hit ship, ship is hidden, red
 	*/
-	background-image: radial-gradient(#951d1d 30%, #c02626 30%, #c02626 60%, Transparent 40% ); 
+	background-image: radial-gradient(#951d1d 30%, #c02626 30%, #c02626 60%, Transparent 40% );
 }
 .board td.ship.hit {
 	/*
