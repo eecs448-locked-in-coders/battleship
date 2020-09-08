@@ -50,9 +50,14 @@ class Board {
 				let td = document.createElement("td");
 				if (cell.isHit) td.classList.add("hit");
 				if ((cell.isHit || showShips) && cell.hasShip) td.classList.add("ship");
-				td.addEventListener("click", e => executive.clickSpace(cell,!showShips));
+				td.addEventListener("click", e =>{
+					executive.clickSpace(cell,!showShips)
+					if (this.checkWin()){
+						executive.blankBoards(); //keep or delete this?
+					}
+				}); 
 				tr.appendChild(td);
-				this.checkWin();
+				
 			}
 			table.appendChild(tr);
 		}
@@ -75,5 +80,17 @@ class Board {
 	}
 	
 	checkWin() {
+		let win = true
+		for (let Ship of this.ships) {
+			let sunked = 0;
+			if (this.ships[Ship].isSunked == true) {
+				sunked++;
+			}
+			if (sunked == this.numShips) {
+				alert("You win!") //Improve: Say which player won
+				return(win);
+			}
+		}
+		return(!win);
 	}
 }

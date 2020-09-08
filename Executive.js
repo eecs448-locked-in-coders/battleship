@@ -8,8 +8,8 @@ class Executive {
 
 		let numbShips = this.setNumShips(); //finish
 
-		this.board0 = new Board(rows, cols, numbShips); //Add fake number to test
-		this.board1 = new Board(rows, cols, numbShips);
+		this.board0 = new Board(rows, cols, 5); //Fake number to test
+		this.board1 = new Board(rows, cols, 5);
 		
 		this.renderBoards();
 		
