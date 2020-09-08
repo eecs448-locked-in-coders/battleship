@@ -8,6 +8,7 @@
 		<script src="Board.js"></script>
 		<script src="Space.js"></script>
 		<script src="Ship.js"></script>
+
 	</head>
 	<body>
 		<div class="board-container">
@@ -20,9 +21,25 @@
 		</div>
 		<div id="message"></div>
 		<input type="button" id="switch-turn" value="Switch turn">
+
+		<div class="option">
+			<p>Number of Ships</p>
+			<input type="range" min="1" max="5" value="1" class="shipslider" id="Numships">
+			<input type="button" id="complete" value="done">
+			<p>Ships: <span id="NShip"></span></p>
+		</div>
+
+		<script>
+var shipslider = document.getElementById("Numships");
+var output = document.getElementById("NShip");
+let update = ()=> output.innerHTML=shipslider.value;
+shipslider.addEventListener("input", update);
+  update();
+</script>
+
 		<script>
 			window.executive = new Executive(9, 9);
-			
+
 			// For testing
 			executive.placeSampleShips();
 			executive.renderBoards();
