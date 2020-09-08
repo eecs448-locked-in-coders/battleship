@@ -10,6 +10,7 @@
 		<script src="Ship.js"></script>
 	</head>
 	<body>
+		<h1>BATTLESHIP</h1>
 		<div class="board-container">
 			<input type="text" class="player-name" value="Player 1">
 			<table class="board" id="board0"></table>
@@ -22,7 +23,7 @@
 		<input type="button" id="switch-turn" value="Switch turn">
 		<script>
 			window.executive = new Executive(9, 9);
-			
+
 			// For testing
 			executive.placeSampleShips();
 			executive.renderBoards();
