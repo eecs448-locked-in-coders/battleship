@@ -23,19 +23,10 @@
 		<input type="button" id="switch-turn" value="Switch turn">
 
 		<div class="option">
-			<p>Number of Ships</p>
-			<input type="range" min="1" max="5" value="1" class="shipslider" id="Numships">
-			<input type="button" id="complete" value="done">
-			<p>Ships: <span id="NShip"></span></p>
+			<p>Number of Ships: <span id="num-ships">1</span></p>
+			<input type="range" min="1" max="5" value="1" id="ship-slider">
+			<input type="button" id="complete" value="Done">
 		</div>
-
-		<script>
-var shipslider = document.getElementById("Numships");
-var output = document.getElementById("NShip");
-let update = ()=> output.innerHTML=shipslider.value;
-shipslider.addEventListener("input", update);
-  update();
-</script>
 
 		<script>
 			window.executive = new Executive(9, 9);
