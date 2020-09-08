@@ -50,6 +50,7 @@ class Board {
 				if ((cell.isHit || showShips) && cell.hasShip) td.classList.add("ship");
 				td.addEventListener("click", e => executive.clickSpace(cell,!showShips));
 				tr.appendChild(td);
+				this.checkWin();
 			}
 			table.appendChild(tr);
 		}

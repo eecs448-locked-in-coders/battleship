@@ -12,11 +12,17 @@ class Executive {
 		this.renderBoards();
 		
 		document.getElementById("switch-turn").addEventListener("click", e => {
-			this.turn = !this.turn;
-			this.renderBoards();
+			this.blankBoards();
+
+				this.turn = !this.turn;
+				this.renderBoards();
 		});
 	}
-	
+
+	blankBoards(){
+		this.board0.render(document.getElementById("board0"),0, this);
+		this.board1.render(document.getElementById("board1"),0, this);
+	}	
 	renderBoards() {
 		this.board0.render(document.getElementById("board0"), !this.turn, this);
 		this.board1.render(document.getElementById("board1"), this.turn, this);
@@ -32,7 +38,7 @@ class Executive {
 		if (!blocked) {
 			cell.isHit = true;
 			// TODO: Check if a ship was there
-			this.renderBoards();
+			this.renderBoards();	
 		}
 	}
 	
