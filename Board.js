@@ -2,9 +2,11 @@ const ROWS = 10;
 const COLS = 10;
 
 class Board {
-	constructor(rows, cols) {
+	constructor(rows, cols, numShip) {
 		this.ships = [];
 		this.cells = [];
+		this.numShips = numShip;
+		
 		for (let row = 0; row < rows; row++) {
 			this.cells[row] = [];
 			for (let col = 0; col < cols; col++) {

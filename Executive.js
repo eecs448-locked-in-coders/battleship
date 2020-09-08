@@ -5,9 +5,11 @@ class Executive {
 		
 		// Which player's turn it is (players are false and true, aka 0 and 1)
 		this.turn = false; 
-		
-		this.board0 = new Board(rows, cols);
-		this.board1 = new Board(rows, cols);
+
+		let numbShips = this.setNumShips(); //finish
+
+		this.board0 = new Board(rows, cols, numbShips); //Add fake number to test
+		this.board1 = new Board(rows, cols, numbShips);
 		
 		this.renderBoards();
 		
@@ -39,7 +41,9 @@ class Executive {
 		this.board1.render(document.getElementById("board1"), this.turn, this);
 	}
 	
+	//FINISH
 	setNumShips() {
+		//return();  like that
 	}
 	
 	switchTurns() {
