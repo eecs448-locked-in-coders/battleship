@@ -15,6 +15,10 @@ class Executive {
 			this.turn = !this.turn;
 			this.renderBoards();
 		});
+		
+		document.getElementById("ship-slider").addEventListener("input", e => {
+			document.getElementById("num-ships").innerHTML = e.target.value
+		});
 	}
 
 	renderBoards() {
