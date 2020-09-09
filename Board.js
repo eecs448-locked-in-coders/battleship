@@ -46,8 +46,11 @@ class Board {
 
 			for (let cell of row) {
 				let td = document.createElement("td");
-				if (cell.isHit) td.classList.add("hit");
-				if ((cell.isHit || showShips) && cell.hasShip) td.classList.add("ship");
+				//Try to add the endship, horizontal, vertical, and NS/EW showShips
+				
+				if (showShips && cell.hasShip) td.classList.add("ship");
+				if (cell.isHit && !cell.hasShip) td.classList.add("miss");
+				if (cell.isHit && cell.hasShip) td.classList.add("hit");
 				td.addEventListener("click", e => executive.clickSpace(cell));
 				tr.appendChild(td);
 			}
