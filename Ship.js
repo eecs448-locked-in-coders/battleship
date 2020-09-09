@@ -10,8 +10,8 @@ class Ship {
 		this.row = row;
 		this.col = col;
 		this.isVertical = isVertical;
-		this.sunked = 0;
-		this.isSunked = false;
+		//this.sunked = 0;
+		//this.isSunked = false;
 	}
 	
 	/**

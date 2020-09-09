@@ -6,6 +6,8 @@ class Board {
 		this.ships = [];
 		this.cells = [];
 		this.numShips = numShip;
+
+		this.shipSpaces = 0; //Testing this idea
 		
 		for (let row = 0; row < rows; row++) {
 			this.cells[row] = [];
@@ -51,13 +53,23 @@ class Board {
 				if (cell.isHit) td.classList.add("hit");
 				if ((cell.isHit || showShips) && cell.hasShip) td.classList.add("ship");
 				td.addEventListener("click", e =>{
-					executive.clickSpace(cell,!showShips)
-					if (this.checkWin()){
-						executive.blankBoards(); //keep or delete this?
+					
+
+					if (cell.hasShip) { //Testing this idea
+						this.shipSpaces--;
+						if (this.shipSpaces == 0) {
+							//if (this.checkWin()){
+								alert("You win!") //Improve: Say which player won
+								executive.blankBoards(); //keep or delete this?
+							//}
+						}
+						
 					}
+					
+
+					executive.clickSpace(cell,!showShips)
 				}); 
 				tr.appendChild(td);
-				
 			}
 			table.appendChild(tr);
 		}
@@ -67,6 +79,9 @@ class Board {
 	placeShip(length, row, col, isVertical) {
 		let ship = new Ship(length, row, col, isVertical);
 		this.ships.push(ship);
+
+		this.shipSpaces = this.shipSpaces + length; //Testing this idea
+
 		let coords = ship.listIntersecting();
 		for (let coord of coords) {
 			this.cells[coord[0]][coord[1]].hasShip = true;
@@ -80,8 +95,11 @@ class Board {
 	}
 	
 	checkWin() {
-		let win = true
-		for (let Ship of this.ships) {
+		let win = true;
+		
+
+
+		/*for (let Ship of this.ships) {
 			let sunked = 0;
 			if (this.ships[Ship].isSunked == true) {
 				sunked++;
@@ -90,7 +108,10 @@ class Board {
 				alert("You win!") //Improve: Say which player won
 				return(win);
 			}
-		}
+		}*/
+
+
+
 		return(!win);
 	}
 }
