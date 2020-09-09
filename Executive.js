@@ -30,7 +30,7 @@ class Executive {
 				},1000);
 				
 		});
-		
+
 		document.getElementById("ship-slider").addEventListener("input", e => {
 			document.getElementById("num-ships").innerHTML = e.target.value;
 		});
