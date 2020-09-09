@@ -1,15 +1,13 @@
 class Executive {
-	constructor(rows, cols) {
+	constructor(rows, cols, numbShip) {
 		this.rows = rows;
 		this.cols = cols;
 
 		// Which player's turn it is (players are false and true, aka 0 and 1)
 		this.turn = false; 
-
-		let numbShips = this.setNumShips(); //finish
-
-		this.board0 = new Board(rows, cols, 5); //Fake number to test
-		this.board1 = new Board(rows, cols, 5);
+		this.numbShips = numbShip;
+		this.board0 = new Board(rows, cols, this.numbShips);
+		this.board1 = new Board(rows, cols, this.numbShips);
 		
 		this.renderBoards(false);
 
@@ -30,10 +28,6 @@ class Executive {
 				},1000);
 				
 		});
-
-		document.getElementById("ship-slider").addEventListener("input", e => {
-			document.getElementById("num-ships").innerHTML = e.target.value;
-		});
 	}
 
 	blankBoards() {
@@ -51,14 +45,6 @@ class Executive {
 		this.board1.render(document.getElementById("board1"), true, this, true);
 	}
 	
-	//FINISH
-	setNumShips() {
-		//return();  like that
-	}
-	
-
-	switchTurns() {
-	}
 	
 	clickSpace(cell,blocked) {
 		if (!blocked) {

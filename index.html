@@ -12,16 +12,34 @@
 	</head>
 	<body>
 		<h1>BATTLESHIP</h1>
-		<div class="board-container">
-			<input type="text" class="player-name" value="Player 1">
-			<table class="board" id="board0"></table>
+
+		<!-- Probably add CSS to this -->
+		<div style="text-align:center" id="menu">
+            <h2>WELCOME</h2>
+            <p>Please enter player's names: </p>
+            <form action="">
+                Player 1:  <input autofocus type="text" id="Player1"> <br>
+                Player 2:  <input type="text" id="Player2"> <br>
+			</form>
+			<p>Number of Ships: <span id="num-ships">1</span></p>
+			<input type="range" min="1" max="5" value="1" id="ship-slider">
+			<input type="button" id="complete" value="Done">
 		</div>
-		<div class="board-container">
-			<input type="text" class="player-name" value="Player 2">
-			<table class="board" id="board1"></table>
+		
+
+		<div class="both-boards" id="both_boards">
+			<div class="board-container">
+				<input type="text" class="player-name" id="firstPlayer">
+				<table class="board" id="board0"></table>
+			</div>
+			<div class="board-container">
+				<input type="text" class="player-name" id="secondPlayer">
+				<table class="board" id="board1"></table>
+			</div>
+			<div id="message"></div>
+			<input type="button" id="switch-turn" value="Switch turn">
 		</div>
-		<div id="message"></div>
-		<input type="button" id="switch-turn" value="Switch turn">
+
 
 		<!-- Probably add CSS to this -->
 		<div id="modal" class="modal">
@@ -30,18 +48,30 @@
 			</div>
 		</div>
 
-		<div class="option">
-			<p>Number of Ships: <span id="num-ships">1</span></p>
-			<input type="range" min="1" max="5" value="1" id="ship-slider">
-			<input type="button" id="complete" value="Done">
-		</div>
+
 
 		<script>
-			window.executive = new Executive(9, 9);
 
-			// For testing
-			executive.placeSampleShips();
-			executive.renderBoards();
+			 //wait for the DOM to load
+			document.addEventListener("DOMContentLoaded",()=>{
+				let numbShips = 0;
+				document.getElementById("ship-slider").addEventListener("input", e => {
+					numbShips = e.target.value
+					document.getElementById("num-ships").innerHTML = numbShips;
+				});
+
+				//setting up the event for a click to change the menu for the board
+				document.getElementById("complete").addEventListener("click", () => { 
+					document.getElementById("firstPlayer").value = document.getElementById("Player1").value;
+					document.getElementById("secondPlayer").value = document.getElementById("Player2").value;
+					document.getElementById("menu").style.display = "none";
+					document.getElementById("both_boards").style.display = "block";
+					window.executive = new Executive(9, 9, numbShips);
+					// For testing
+					executive.placeSampleShips();
+					executive.renderBoards();
+				})
+			});
 		</script>
 	</body>
 </html>

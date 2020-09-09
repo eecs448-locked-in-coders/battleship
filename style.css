@@ -30,6 +30,10 @@ h1{
 	width: 98%;
 }
 
+.both-boards {
+	display: none;
+}
+
 .board {
 	/*
 		Water background, waves
