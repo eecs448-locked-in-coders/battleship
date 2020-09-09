@@ -15,7 +15,7 @@ class Executive {
 			this.turn = !this.turn;
 			this.renderBoards();
 		});
-		
+
 		document.getElementById("ship-slider").addEventListener("input", e => {
 			document.getElementById("num-ships").innerHTML = e.target.value;
 		});
@@ -27,11 +27,6 @@ class Executive {
 	}
 
 	setNumShips() {
-<<<<<<< HEAD
-=======
-	
-
->>>>>>> dbc97583ba718e1f5a59e989823e4d386afc5230
 	}
 
 	switchTurns() {
