@@ -4,6 +4,7 @@ class Ship {
 	* @param row The row coordinate of the top end of the ship
 	* @param col The col coordinate of the left end of the ship
 	* @param isVertical Direction of ship (false = horizontal)
+
 	**/
 	constructor(length, row, col, isVertical) {
 		this.length = length;
@@ -13,14 +14,14 @@ class Ship {
 		//this.sunked = 0;
 		//this.isSunked = false;
 	}
-	
+
 	/**
 	* @return Whether the given row, col coordinates intersect the ship
 	**/
 	isIntersecting(row, col) {
-	
+
 	}
-	
+
 	/**
 	* @return An array of (row, col) pairs of coordinates
 	**/

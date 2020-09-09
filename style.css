@@ -71,7 +71,6 @@ body {
 	pointer-events: none;
 }
 
-
 .modal {
 	display: none; 
 	position: fixed;
@@ -92,4 +91,9 @@ body {
 	border: 1px solid #888;
 	width: 80%; 
   }
-  
+
+.shipslider{
+	height: 20%;
+	width: 20%;
+	
+}

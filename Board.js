@@ -16,15 +16,16 @@ class Board {
 			}
 		}
 	}
-	
+
 	/**
 	* @param table The DOM element to render the board to
 	* @param showShips Boolean for whether all ship locations should be visible
 	* @param executive Object to use the clickSpace method of
+	* @param final Boolean for whether the game is already won
 	**/
-	render(table, showShips, executive) {
+	render(table, showShips, executive, final) {
 		table.innerHTML = ""; // Remove any existing cells
-		
+
 		// Add letter row
 		let letter = 'A';
 		let tr = document.createElement("tr");
@@ -37,44 +38,36 @@ class Board {
 			letter = String.fromCharCode(letter.charCodeAt(0) + 1); // Increment letter
 		}
 		table.appendChild(tr);
-		
+
 		let num = 1;
 		for (let row of this.cells) {
 			let tr = document.createElement("tr");
-			
+
 			// Add number column
 			let th = document.createElement("th");
 			th.innerText = num;
 			tr.appendChild(th);
 			num++;
-			
+
 			for (let cell of row) {
 				let td = document.createElement("td");
 				if (cell.isHit) td.classList.add("hit");
 				if ((cell.isHit || showShips) && cell.hasShip) td.classList.add("ship");
-				td.addEventListener("click", e =>{
-					
-
-					if (cell.hasShip) { //Testing this idea
-						this.shipSpaces--;
-						if (this.shipSpaces == 0) {
-							//if (this.checkWin()){
-								alert("You win!") //Improve: Say which player won
-								executive.blankBoards(); //keep or delete this?
-							//}
+				if (!final) {
+					td.addEventListener("click", e =>{
+						if (cell.hasShip) { //Testing this idea
+							this.shipSpaces--;
+							this.checkWin(executive);
 						}
-						
-					}
-					
-
-					executive.clickSpace(cell,!showShips)
-				}); 
+						executive.clickSpace(cell,!showShips)
+					}); 
+				}
 				tr.appendChild(td);
 			}
 			table.appendChild(tr);
 		}
 	}
-	
+
 	// TODO: Validate coordinates are within bounds of board
 	placeShip(length, row, col, isVertical) {
 		let ship = new Ship(length, row, col, isVertical);
@@ -87,16 +80,22 @@ class Board {
 			this.cells[coord[0]][coord[1]].hasShip = true;
 		}
 	}
-	
+
 	// Currently unused
 	attack(row, col) {
 		this.cells[row][col].isHit = true;
 		this.checkWin();
 	}
-	
-	checkWin() {
-		let win = true;
-		
+
+	checkWin(executive) {
+		if ((this.shipSpaces == 0)){
+			alert("You win!") //Improve: Say which player won
+			executive.renderBothBoards(); //FIX: doesnt render both
+		}
+	}
+}
+
+
 
 
 		/*for (let Ship of this.ships) {
@@ -109,9 +108,3 @@ class Board {
 				return(win);
 			}
 		}*/
-
-
-
-		return(!win);
-	}
-}
