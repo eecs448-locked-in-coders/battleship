@@ -8,6 +8,7 @@
 		<script src="Board.js"></script>
 		<script src="Space.js"></script>
 		<script src="Ship.js"></script>
+
 	</head>
 	<body>
 		<h1>BATTLESHIP</h1>
@@ -21,6 +22,13 @@
 		</div>
 		<div id="message"></div>
 		<input type="button" id="switch-turn" value="Switch turn">
+
+		<div class="option">
+			<p>Number of Ships: <span id="num-ships">1</span></p>
+			<input type="range" min="1" max="5" value="1" id="ship-slider">
+			<input type="button" id="complete" value="Done">
+		</div>
+
 		<script>
 			window.executive = new Executive(9, 9);
 
