@@ -11,10 +11,6 @@ class Ship {
 		this.row = row;
 		this.col = col;
 		this.isVertical = isVertical;
-
-
-
-		
 	}
 
 	/**

@@ -1,41 +1,67 @@
 class Executive {
-	constructor(rows, cols) {
+	constructor(rows, cols, numbShip) {
 		this.rows = rows;
 		this.cols = cols;
 
 		// Which player's turn it is (players are false and true, aka 0 and 1)
-		this.turn = false;
-
-		this.board0 = new Board(rows, cols);
-		this.board1 = new Board(rows, cols);
-
-		this.renderBoards();
+		this.turn = false; 
+		this.numbShips = numbShip;
+		this.board0 = new Board(rows, cols, this.numbShips);
+		this.board1 = new Board(rows, cols, this.numbShips);
+		
+		this.renderBoards(false);
 
 		document.getElementById("switch-turn").addEventListener("click", e => {
-			this.turn = !this.turn;
-			this.renderBoards();
+			this.blankBoards();
+			let modal = document.getElementById("modal");
+			modal.style.display = "block"
+			let time = 5;
+			let timer  = setInterval(() => {
+				document.getElementById("modal-content").innerHTML = "Next turn in " + time + " seconds!"; // FIX: Displays 0
+				time--;
+				if (time<0) {
+					modal.style.display = "none";
+					this.turn = !this.turn;
+					this.renderBoards(false);
+					clearInterval(timer);
+				}
+				},1000);
+				
 		});
-
-		document.getElementById("ship-slider").addEventListener("input", e => {
-			document.getElementById("num-ships").innerHTML = e.target.value;
-		});
 	}
 
-	renderBoards() {
-		this.board0.render(document.getElementById("board0"), !this.turn, this);
-		this.board1.render(document.getElementById("board1"), this.turn, this);
+	switchTurns(isVisible) {
+		if (isVisible) {
+			document.getElementById("switch-turn").style.display = "block";
+		} else {
+			document.getElementById("switch-turn").style.display = "none";
+		}
 	}
 
-	setNumShips() {
+	blankBoards() {
+		this.board0.render(document.getElementById("board0"), this, false, false);
+		this.board1.render(document.getElementById("board1"), this,false, false);
+		this.switchTurns(false);
+	}	
+	renderBoards(final) {
+		this.board0.render(document.getElementById("board0"), this, !this.turn, final);
+		this.board1.render(document.getElementById("board1"), this,this.turn, final);
 	}
 
-	switchTurns() {
+	//FIX: doesn't show both boards
+	TheEnd() {
+		this.board0.render(document.getElementById("board0"), this, true, true);
+		this.board1.render(document.getElementById("board1"), this, true, true);
 	}
-
-	clickSpace(cell) {
-		cell.isHit = true;
-		// TODO: Check if a ship was there
-		this.renderBoards();
+	
+	
+	clickSpace(cell,blocked) {
+		if (!blocked) {
+			cell.isHit = true;
+			// TODO: Check if a ship was there
+			this.renderBoards(false);	
+			this.switchTurns(true);
+		}
 	}
 
 	/**
@@ -55,3 +81,11 @@ class Executive {
 		this.board1.placeShip(5, 3, 7, true);
 	}
 }
+
+
+/*TODO:
+	fix TheEnd
+	finish ship placement
+	Validate coordinates are within bounds of board
+	restrict a cell to be clicked only once
+*/
