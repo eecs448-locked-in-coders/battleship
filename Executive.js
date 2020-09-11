@@ -30,19 +30,28 @@ class Executive {
 		});
 	}
 
-	blankBoards() {
-		this.board0.render(document.getElementById("board0"), false, this, false);
-		this.board1.render(document.getElementById("board1"), false, this, false);
-	}	
-	renderBoards(x) {
-		this.board0.render(document.getElementById("board0"), !this.turn, this, x);
-		this.board1.render(document.getElementById("board1"), this.turn, this, x);
+	switchTurns(isVisible) {
+		if (isVisible) {
+			document.getElementById("switch-turn").style.display = "block";
+		} else {
+			document.getElementById("switch-turn").style.display = "none";
+		}
 	}
 
-	//FIX
-	renderBothBoards() {
-		this.board0.render(document.getElementById("board0"), true, this, true);
-		this.board1.render(document.getElementById("board1"), true, this, true);
+	blankBoards() {
+		this.board0.render(document.getElementById("board0"), this, false, false);
+		this.board1.render(document.getElementById("board1"), this,false, false);
+		this.switchTurns(false);
+	}	
+	renderBoards(final) {
+		this.board0.render(document.getElementById("board0"), this, !this.turn, final);
+		this.board1.render(document.getElementById("board1"), this,this.turn, final);
+	}
+
+	//FIX: doesn't show both boards
+	TheEnd() {
+		this.board0.render(document.getElementById("board0"), this, true, true);
+		this.board1.render(document.getElementById("board1"), this, true, true);
 	}
 	
 	
@@ -50,7 +59,8 @@ class Executive {
 		if (!blocked) {
 			cell.isHit = true;
 			// TODO: Check if a ship was there
-			this.renderBoards(true);	
+			this.renderBoards(false);	
+			this.switchTurns(true);
 		}
 	}
 
@@ -71,3 +81,11 @@ class Executive {
 		this.board1.placeShip(5, 3, 7, true);
 	}
 }
+
+
+/*TODO:
+	fix TheEnd
+	finish ship placement
+	Validate coordinates are within bounds of board
+	restrict a cell to be clicked only once
+*/

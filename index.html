@@ -17,17 +17,15 @@
 		<div style="text-align:center" id="menu">
             <h2>WELCOME</h2>
             <p>Please enter player's names: </p>
-            <form action="">
-                Player 1:  <input autofocus type="text" id="Player1"> <br>
-                Player 2:  <input type="text" id="Player2"> <br>
-			</form>
+			<p> Player 1:  <input autofocus type="text" id="Player1"></p>
+			<p> Player 2:  <input type="text" id="Player2"></p>
 			<p>Number of Ships: <span id="num-ships">1</span></p>
 			<input type="range" min="1" max="5" value="1" id="ship-slider">
 			<input type="button" id="complete" value="Done">
 		</div>
 		
 
-		<div class="both-boards" id="both_boards">
+		<div id="both_boards">
 			<div class="board-container">
 				<input type="text" class="player-name" id="firstPlayer">
 				<table class="board" id="board0"></table>
@@ -44,7 +42,7 @@
 		<!-- Probably add CSS to this -->
 		<div id="modal" class="modal">
 			<div class="modal-content">
-				<p id=modal-content></p>
+				<p id="modal-content"></p>
 			</div>
 		</div>
 

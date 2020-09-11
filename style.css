@@ -30,8 +30,19 @@ h1{
 	width: 98%;
 }
 
-.both-boards {
+#both_boards {
 	display: none;
+}
+
+#switch-turn {
+	display: none;
+	text-align: center;
+	margin: 5;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
 }
 
 .board {

@@ -1,13 +1,18 @@
 const ROWS = 10;
 const COLS = 10;
-
+/**
+ * @member ships Array of ships in the current board
+ * @member cells 2D array of cell containing space objects
+ * @member numShips Number of ships in the current board
+ * @member shipSpaces Number of spaces/cells that are occupied by a ship
+ * idk if this could be considered good documentation for JSDOC but I guess it'll work for now
+ */
 class Board {
 	constructor(rows, cols, numShip) {
 		this.ships = [];
 		this.cells = [];
 		this.numShips = numShip;
-
-		this.shipSpaces = 0; //Testing this idea
+		this.shipSpaces = 0;
 		
 		for (let row = 0; row < rows; row++) {
 			this.cells[row] = [];
@@ -19,11 +24,11 @@ class Board {
 
 	/**
 	* @param table The DOM element to render the board to
-	* @param showShips Boolean for whether all ship locations should be visible
 	* @param executive Object to use the clickSpace method of
+	* @param isCurrentPlayer Boolean for whether all ship locations should be visible
 	* @param final Boolean for whether the game is already won
 	**/
-	render(table, showShips, executive, final) {
+	render(table, executive, isCurrentPlayer, final) {
 		table.innerHTML = ""; // Remove any existing cells
 
 		// Add letter row
@@ -51,16 +56,18 @@ class Board {
 
 			for (let cell of row) {
 				let td = document.createElement("td");
-				if (showShips && cell.hasShip) td.classList.add("ship");
+				if (isCurrentPlayer && cell.hasShip) td.classList.add("ship");
 				if (cell.isHit && !cell.hasShip) td.classList.add("miss");
 				if (cell.isHit && cell.hasShip) td.classList.add("hit");
 				if (!final) {
 					td.addEventListener("click", e =>{
-						if (cell.hasShip) { //Testing this idea
+						if (cell.hasShip) { 
 							this.shipSpaces--;
-							this.checkWin(executive);
+							if (this.checkWin()){
+								executive.TheEnd();
+							}
 						}
-						executive.clickSpace(cell,!showShips)
+						executive.clickSpace(cell,isCurrentPlayer)
 					}); 
 				}
 				tr.appendChild(td);
@@ -73,39 +80,18 @@ class Board {
 	placeShip(length, row, col, isVertical) {
 		let ship = new Ship(length, row, col, isVertical);
 		this.ships.push(ship);
-
-		this.shipSpaces = this.shipSpaces + length; //Testing this idea
-
+		this.shipSpaces = this.shipSpaces + length; 
 		let coords = ship.listIntersecting();
 		for (let coord of coords) {
 			this.cells[coord[0]][coord[1]].hasShip = true;
 		}
 	}
 
-	// Currently unused
-	attack(row, col) {
-		this.cells[row][col].isHit = true;
-		this.checkWin();
-	}
-
-	checkWin(executive) {
+	checkWin() {
 		if ((this.shipSpaces == 0)){
-			alert("You win!") //Improve: Say which player won
-			executive.renderBothBoards(); //FIX: doesnt render both
+			alert("You win!") //Improve: Say which player won and display it better
+			return(true);
 		}
+		return(false);
 	}
 }
-
-
-
-
-		/*for (let Ship of this.ships) {
-			let sunked = 0;
-			if (this.ships[Ship].isSunked == true) {
-				sunked++;
-			}
-			if (sunked == this.numShips) {
-				alert("You win!") //Improve: Say which player won
-				return(win);
-			}
-		}*/
