@@ -8,6 +8,7 @@
 		<script src="Board.js"></script>
 		<script src="Space.js"></script>
 		<script src="Ship.js"></script>
+		<script src="Gameplay.js"></script>
 
 	</head>
 	<body>
@@ -26,12 +27,22 @@
 		
 
 		<div id="both_boards">
-			<div class="board-container">
+			<div class="board-container" id="board-container0">
 				<input type="text" class="player-name" id="firstPlayer">
+				<!--
+				<div class="coordinates"  id="coordinates0">
+					<p>Input coordinates for your ship(s) using the sample board (e.g. A1):</p>
+				</div>
+				-->
 				<table class="board" id="board0"></table>
 			</div>
-			<div class="board-container">
+			<div class="board-container" id="board-container1">
 				<input type="text" class="player-name" id="secondPlayer">
+				<!--
+				<div class="coordinates" id="coordinates1">
+					<p>Input coordinates for your ship(s) using the sample board (e.g. A1):</p>
+				</div>
+				-->
 				<table class="board" id="board1"></table>
 			</div>
 			<div id="message"></div>
@@ -46,29 +57,9 @@
 			</div>
 		</div>
 
-
-
 		<script>
-
-			 //wait for the DOM to load
 			document.addEventListener("DOMContentLoaded",()=>{
-				let numbShips = 0;
-				document.getElementById("ship-slider").addEventListener("input", e => {
-					numbShips = e.target.value
-					document.getElementById("num-ships").innerHTML = numbShips;
-				});
-
-				//setting up the event for a click to change the menu for the board
-				document.getElementById("complete").addEventListener("click", () => { 
-					document.getElementById("firstPlayer").value = document.getElementById("Player1").value;
-					document.getElementById("secondPlayer").value = document.getElementById("Player2").value;
-					document.getElementById("menu").style.display = "none";
-					document.getElementById("both_boards").style.display = "block";
-					window.executive = new Executive(9, 9, numbShips);
-					// For testing
-					executive.placeSampleShips();
-					executive.renderBoards();
-				})
+				window.executive = new Executive();
 			});
 		</script>
 	</body>
