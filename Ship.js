@@ -4,6 +4,7 @@ class Ship {
 	* @param row The row coordinate of the top end of the ship
 	* @param col The col coordinate of the left end of the ship
 	* @param isVertical Direction of ship (false = horizontal)
+
 	**/
 	constructor(length, row, col, isVertical) {
 		this.length = length;
