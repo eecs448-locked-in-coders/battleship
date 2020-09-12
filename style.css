@@ -34,6 +34,10 @@ h1{
 	display: none;
 }
 
+.coordinates {
+	display: none;
+}
+
 #switch-turn {
 	display: none;
 	text-align: center;

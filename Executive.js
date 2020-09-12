@@ -56,10 +56,9 @@ class Executive {
 	
 	
 	clickSpace(cell,blocked) {
-		if (!blocked) {
+		if (!blocked && !cell.isHit) {
 			cell.isHit = true;
-			// TODO: Check if a ship was there
-			this.renderBoards(false);	
+			this.renderBoards(true);	
 			this.switchTurns(true);
 		}
 	}
