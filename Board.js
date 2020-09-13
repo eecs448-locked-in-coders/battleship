@@ -59,7 +59,7 @@ class Board {
 				if (cell.isHit && !cell.hasShip) td.classList.add("miss");
 				if (cell.isHit && cell.hasShip) td.classList.add("hit");
 				if (!final) {
-					td.addEventListener("click", e=> game.clickSpace (cell, isCurrentPlayer));
+					td.addEventListener("click", e=> game.clickSpace (cell, isCurrentPlayer));//Each cell has its own event listenser that listens for clicks on its own cell.
 				}
 				tr.appendChild(td);
 			}

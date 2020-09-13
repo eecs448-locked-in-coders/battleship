@@ -4,7 +4,7 @@
 */
 class Space {
 	constructor(row, col) {
-		this.row = row; //'Private' member variable assignment
+		this.row = row;
 		this.col = col;
 		this.hasShip = false;
 		this.isHit = false;

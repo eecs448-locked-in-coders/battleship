@@ -8,7 +8,7 @@ class Gameplay {
 		this.numbShips = numbShip;
 		this.board0 = new Board(rows, cols, this.numbShips);
 		this.board1 = new Board(rows, cols, this.numbShips);
-		this.isSetup= false; //Are the ships set up? If no then the game cannot commence.
+		this.isSetup= false; //If false then we are in the ship placement phase (pre gameplay).
 		this.renderBoards(false);
 
 		document.getElementById("switch-turn").addEventListener("click", e => {
@@ -56,23 +56,19 @@ class Gameplay {
 
 
 	clickSpace(cell, isCurrentPlayer) {
+		let x = this.board1;
 		if (this.isSetup)
 		{
 			if (!isCurrentPlayer && !cell.isHit) {
 				cell.isHit = true;
 				if (cell.hasShip)
 				{
-					if (!this.turn){
-						this.board1.shipSpaces--;
-						if (this.board1.checkWin()){
-							this.TheEnd();
-						}
+					if (this.turn){
+						x = this.board0;
 					}
-					else {
-						this.board0.shipSpaces--;
-						if (this.board0.checkWin()){
-							this.TheEnd();
-						}
+					x.shipSpaces--;
+					if (x.checkWin()){
+						this.TheEnd();
 					}
 				}
 				this.renderBoards(true);
