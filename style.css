@@ -69,7 +69,7 @@ h1 {
 }
 
 .board td {
-	background-image: radial-gradient(rgba(128,128,128,0.7) 30%, transparent 30%, transparent 100%);
+	background-image: radial-gradient(rgba(128,128,128,0.7) 28%, transparent 32%, transparent 100%);
 	position: relative;
 }
 
@@ -78,26 +78,26 @@ h1 {
 	/*
 		Miss shot, yellow
 	*/
-	background-image: radial-gradient(#a5a50d 30%, #f0f042 30%, #f0f042 60%, transparent 40%);
+	background-image: radial-gradient(#a5a50d 28%, #f0f042 32%, #f0f042 58%, transparent 62%);
 }
 
 .board td.ship {
 	/*
 		Ship cell, grey
 	*/
-	background: radial-gradient(rgba(128,128,128,0.7) 30%, #7b9095 30%, #7b9095 100%);
+	background: radial-gradient(rgba(128,128,128,0.7) 28%, #7b9095 32%, #7b9095 100%);
 }
-.board td.hit{
+.board td.hit {
 	/*
 		Shell hit ship, ship is hidden, red
 	*/
-	background-image: radial-gradient(#951d1d 30%, #c02626 30%, #c02626 60%, transparent 40%);
+	background-image: radial-gradient(#951d1d 28%, #c02626 32%, #c02626 58%, transparent 62%);
 }
 .board td.ship.hit {
 	/*
 		Shell hit ship cell, red & grey
 	*/
-	background-image: radial-gradient(#951d1d 30%, #c02626 30%, #c02626 60%, #7b9095 40%);
+	background-image: radial-gradient(#951d1d 28%, #c02626 32%, #c02626 58%, #7b9095 62%);
 }
 
 .board td:before {
