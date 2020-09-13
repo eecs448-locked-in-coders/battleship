@@ -18,8 +18,8 @@ class Executive {
 			document.getElementById("both_boards").style.display = "block";
 			this.game = new Gameplay(9, 9, numShips);
 			// For testing
-			game.placeSampleShips();
-			game.renderBoards();
+			this.game.placeSampleShips();
+			this.game.renderBoards();
 		});
     }
 }
