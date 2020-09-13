@@ -26,27 +26,27 @@ class Gameplay {
 			let modal = document.getElementById("modal");
 			modal.style.display = "block"
 			let time = 5;
-			let timer = setInterval(() => {
-				document.getElementById("modal-content").innerHTML = "Next turn in " + time + " seconds!"; // FIX: Displays 0
+			this.turnTimer = setInterval(() => {
+				// FIX: Displays 0
+				// TODO: Implement this button in a much better way
+				document.getElementById("modal-content").innerHTML = "Next turn in " + time + " seconds!<br><input type='button' value='Switch now' onclick='window.executive.game.switchTurns()'>";
 				time--;
-				if (time < 0) {
-					modal.style.display = "none";
-					this.turn = !this.turn;
-					this.renderBoards(false);
-					clearInterval(timer);
-				}
+				if (time < 0) this.switchTurns();
 			}, 1000);
 		});
 	}
-
-	switchTurns(isVisible) {
-		document.getElementById("switch-turn").style.display = isVisible ? "block": "none";
+	
+	switchTurns() {
+		modal.style.display = "none";
+		this.turn = !this.turn;
+		this.renderBoards(false);
+		clearInterval(this.turnTimer);
 	}
 
 	blankBoards() {
 		this.board0.render(document.getElementById("board0"), this, false, false);
 		this.board1.render(document.getElementById("board1"), this, false, false);
-		this.switchTurns(false);
+		document.getElementById("switch-turn").style.display = "none";
 	}
 	
 	renderBoards(isFinal) {
@@ -73,7 +73,7 @@ class Gameplay {
 					}
 				}
 				this.renderBoards(true);
-				this.switchTurns(true);
+				document.getElementById("switch-turn").style.display = "";
 			}
 		}
 	}

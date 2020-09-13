@@ -34,6 +34,10 @@ h1 {
 	margin-top: 0;
 }
 
+#ship-slider {
+	vertical-align: bottom;
+}
+
 .board-container {
 	display: inline-block;
 	margin: 1em;
