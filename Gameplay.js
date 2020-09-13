@@ -14,11 +14,11 @@ class Gameplay {
 
 		this.turn = false;
 		this.isSetup = false;
-		
+
 		this.numShips = numShip;
 		this.board0 = new Board(rows, cols, this.numShips);
 		this.board1 = new Board(rows, cols, this.numShips);
-		
+
 		this.renderBoards(false);
 
 		document.getElementById("switch-turn").addEventListener("click", e => {
@@ -29,13 +29,14 @@ class Gameplay {
 			this.turnTimer = setInterval(() => {
 				// FIX: Displays 0
 				// TODO: Implement this button in a much better way
+				// Fix: The width of the alert
 				document.getElementById("modal-content").innerHTML = "Next turn in " + time + " seconds!<br><input type='button' value='Switch now' onclick='window.executive.game.switchTurns()'>";
 				time--;
 				if (time < 0) this.switchTurns();
 			}, 1000);
 		});
 	}
-	
+
 	switchTurns() {
 		modal.style.display = "none";
 		this.turn = !this.turn;
@@ -48,7 +49,7 @@ class Gameplay {
 		this.board1.render(document.getElementById("board1"), this, false, false);
 		document.getElementById("switch-turn").style.display = "none";
 	}
-	
+
 	renderBoards(isFinal) {
 		this.board0.render(document.getElementById("board0"), this, !this.turn, isFinal);
 		this.board1.render(document.getElementById("board1"), this, this.turn, isFinal);
@@ -93,7 +94,7 @@ class Gameplay {
 		this.board1.placeShip(3, 0, 5, false);
 		this.board1.placeShip(4, 3, 2, true);
 		this.board1.placeShip(5, 3, 7, true);
-		
+
 		this.isSetup = true;
 	}
 }
