@@ -1,6 +1,6 @@
 /**
-*@class
-*
+* @class
+* @description Represents a singls space on a board
 */
 class Space {
 	constructor(row, col) {
