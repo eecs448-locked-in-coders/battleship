@@ -102,13 +102,14 @@ class Gameplay {
 
 	newShip(cell)
 	{
+		
 		if (this.placedshipcount<this.numShips)
 		{
 			this.focusedboard.placeShip(this.placedshipcount,cell.row, cell.col, false);
 			this.renderBoards(false);
 			this.placedshipcount = this.placedshipcount+1;
 		}
-		else if (this.placedshipcount==this.numShips)
+		else if (this.placedshipcount==(this.numShips))
 		{
 			this.focusedboard.placeShip(this.placedshipcount,cell.row, cell.col, false);
 			this.renderBoards(true);
