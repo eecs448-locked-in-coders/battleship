@@ -24,11 +24,11 @@ class Board {
 
 	/**
 	* @param table The DOM element to render the board to
-	* @param executive Object to use the clickSpace method of
+	* @param game Object to use the clickSpace method of
 	* @param isCurrentPlayer Boolean for whether all ship locations should be visible
 	* @param final Boolean for whether the game is already won
 	**/
-	render(table, executive, isCurrentPlayer, final) {
+	render(table, game, isCurrentPlayer, final) {
 		table.innerHTML = ""; // Remove any existing cells
 
 		// Add letter row
@@ -64,11 +64,12 @@ class Board {
 						if (cell.hasShip) {
 							this.shipSpaces--;
 							if (this.checkWin()){
-								executive.TheEnd();
+								game.TheEnd();
 							}
 						}
-						executive.clickSpace(cell,isCurrentPlayer)
+						game.clickSpace(cell,isCurrentPlayer)
 					});
+>>>>>>> ba79257397b21a1deb9527e199098815b04d4527
 				}
 				tr.appendChild(td);
 			}
