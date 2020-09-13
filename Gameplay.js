@@ -55,7 +55,7 @@ class Gameplay {
 			}
 		});
 	}
-	
+
 	/**
 	* @description Sets up the next player's turn by hiding the turn switch modal and displaying their ships
 	**/
@@ -72,9 +72,9 @@ class Gameplay {
 	blankBoards() {
 		this.board0.render(document.getElementById("board0"), this, false, true);
 		this.board1.render(document.getElementById("board1"), this, false, true);
-		
+
 	}
-	
+
 	/**
 	* @description Render the boards, only showing ships on the current player's board
 	* @parameter {boolean} preventClicking Whether to not setup the clickSpace listener on each cell
@@ -158,7 +158,7 @@ class Gameplay {
 		//this.board1.placeShip(3, 0, 5, false);
 		//this.board1.placeShip(4, 3, 2, true);
 		//this.board1.placeShip(5, 3, 7, true);
-		
+
 		this.isSetup = true;
 	}
 }

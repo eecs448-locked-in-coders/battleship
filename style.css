@@ -22,6 +22,40 @@ h1 {
 	margin: auto;
 }
 
+h2 {
+	text-align: center;
+	color: #1aa3ff;
+
+	font-size: 26pt;
+	font-family: "Copperplate Gothic";
+	font-style: italic;
+	font-weight: bold;
+}
+
+p {
+	color: #1aa3ff;
+	font-family: "Copperplate Gothic";
+}
+
+footer {
+	text-align: left;
+	color: #333;
+	font-family: "Times New Roman";
+	font-size: 20px;
+	padding: 10px 10px 10px 10px;
+	position: fixed;
+	bottom: 0;
+	background: white;
+
+	border: 2px groove darkgrey;
+	width: 500px;
+}
+
+input {
+	color: #1aa3ff;
+	font-family: "Copperplate Gothic";
+}
+
 #menu, #controls {
 	background: rgba(255, 255, 255, 0.9);
 	margin-top: 1em;
@@ -109,24 +143,24 @@ h1 {
 }
 
 .modal {
-	display: none; 
+	display: none;
 	position: fixed;
-	z-index: 1; 
+	z-index: 1;
 	left: 0;
 	top: 0;
 	width: 100%;
-	height: 100%; 
-	overflow: auto; 
+	height: 100%;
+	overflow: auto;
 	background-color: rgb(0,0,0);
 	background-color: rgba(0,0,0,0.4);
 }
-  
+
 	.modal-content {
 		background-color: #fefefe;
-		margin: 15% auto; 
+		margin: 15% auto;
 		padding: 20px;
 		border: 1px solid #888;
-		width: 80%; 
+		width: 35%;
 	}
 
 .shipslider {
