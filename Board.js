@@ -1,13 +1,17 @@
 /**
  * @class
  * @description Represents a single player's board, storing the status of each space and ship
- * @member ships Array of ships in the current board
- * @member cells 2D array of cell containing space objects
- * @member numShips Number of ships in the current board
- * @member shipSpaces Number of spaces/cells that are occupied by a ship
- * idk if this could be considered good documentation for JSDOC but I guess it'll work for now
+ * @member {Ship[]]} ships Array of ships in the current board
+ * @member {Space[][]} cells 2D array of cell containing space objects
+ * @member {number} numShips of ships in the current board
+ * @member {number} shipSpaces of spaces/cells that are occupied by a ship
  */
 class Board {
+	/**
+	* @description Initializes the 2D array of Space objects
+	* @param {number} rows The number of rows the board will have
+	* @param {number} cols The number of columns the board will have
+	**/
 	constructor(rows, cols, numShip) {
 		this.ships = [];
 		this.cells = [];
@@ -22,12 +26,13 @@ class Board {
 	}
 
 	/**
-	* @param table The DOM element to render the board to
-	* @param game Object to use the clickSpace method of
-	* @param isCurrentPlayer Boolean for whether all ship locations should be visible
-	* @param isOver Boolean for whether the game is already won
+	* @description Render the current state of the board to an HTML table element, optionally showing ships and allowing clicking
+	* @param {HTMLTableElement} table The table to render the board to
+	* @param {Gameplay} game to use the clickSpace method of
+	* @param {boolean} isCurrentPlayer for whether all ship locations should be visible
+	* @param {boolean} isOver for whether the game is already won
 	**/
-	render(table, game, isCurrentPlayer, isOver) {
+	render(table, game, isCurrentPlayer, preventClicking) {
 		table.innerHTML = ""; // Remove any existing cells
 
 		// Add letter row
@@ -58,7 +63,7 @@ class Board {
 				if (isCurrentPlayer && cell.hasShip) td.classList.add("ship");
 				if (cell.isHit && !cell.hasShip) td.classList.add("miss");
 				if (cell.isHit && cell.hasShip) td.classList.add("hit");
-				if (!isOver) {
+				if (!preventClicking) {
 					// Each cell has its own event listenser that listens for clicks on itself
 					td.addEventListener("click", e => game.clickSpace(cell, isCurrentPlayer)); 
 				}
@@ -67,7 +72,15 @@ class Board {
 			table.appendChild(tr);
 		}
 	}
+	
 	// TODO: Validate coordinates are within bounds of board
+	/**
+	* @description Creates a new Ship object and updates this.ships and this.spaces accordingly
+	* @param {number} length How many spaces long the ship should be
+	* @param {number} row The row coordinate of the top end of the ship
+	* @param {number} col The col coordinate of the left end of the ship
+	* @param {boolean} isVertical Direction of ship (false = horizontal)
+	**/
 	placeShip(length, row, col, isVertical) {
 		let ship = new Ship(length, row, col, isVertical);
 		this.ships.push(ship);
@@ -78,6 +91,10 @@ class Board {
 		}
 	}
 
+	/**
+	* @description Determines whether the game has been won on this board
+	* @return If all ship spaces on this board have been sunk
+	**/
 	checkWin() {
 		return (this.shipSpaces == 0);
 	}
