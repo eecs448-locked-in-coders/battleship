@@ -37,7 +37,7 @@ class Executive {
 		this.game = new Gameplay(this.rows, this.cols, this.numShips);
 		
 		// For testing
-		this.game.placeSampleShips();
-		this.game.renderBoards();
+		//this.game.placeSampleShips();
+		//this.game.renderBoards();
 	}
 }
