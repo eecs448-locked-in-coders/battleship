@@ -1,6 +1,6 @@
-const ROWS = 10;
-const COLS = 10;
 /**
+ * @class
+ * @description Represents a single player's board, storing the status of each space and ship
  * @member ships Array of ships in the current board
  * @member cells 2D array of cell containing space objects
  * @member numShips Number of ships in the current board
@@ -25,9 +25,9 @@ class Board {
 	* @param table The DOM element to render the board to
 	* @param game Object to use the clickSpace method of
 	* @param isCurrentPlayer Boolean for whether all ship locations should be visible
-	* @param final Boolean for whether the game is already won
+	* @param isOver Boolean for whether the game is already won
 	**/
-	render(table, game, isCurrentPlayer, final) {
+	render(table, game, isCurrentPlayer, isOver) {
 		table.innerHTML = ""; // Remove any existing cells
 
 		// Add letter row
@@ -58,8 +58,9 @@ class Board {
 				if (isCurrentPlayer && cell.hasShip) td.classList.add("ship");
 				if (cell.isHit && !cell.hasShip) td.classList.add("miss");
 				if (cell.isHit && cell.hasShip) td.classList.add("hit");
-				if (!final) {
-					td.addEventListener("click", e=> game.clickSpace (cell, isCurrentPlayer));//Each cell has its own event listenser that listens for clicks on its own cell.
+				if (!isOver) {
+					// Each cell has its own event listenser that listens for clicks on itself
+					td.addEventListener("click", e => game.clickSpace(cell, isCurrentPlayer)); 
 				}
 				tr.appendChild(td);
 			}
@@ -78,10 +79,6 @@ class Board {
 	}
 
 	checkWin() {
-		if ((this.shipSpaces == 0)){
-			alert("You win!") //Improve: Say which player won and display it better
-			return(true);
-		}
-		return(false);
+		return (this.shipSpaces == 0);
 	}
 }

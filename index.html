@@ -5,11 +5,10 @@
 		<title>Battleship</title>
 		<link rel="stylesheet" href="style.css">
 		<script src="Executive.js"></script>
+		<script src="Gameplay.js"></script>
 		<script src="Board.js"></script>
 		<script src="Space.js"></script>
 		<script src="Ship.js"></script>
-		<script src="Gameplay.js"></script>
-
 	</head>
 	<body>
 		<h1>BATTLESHIP</h1>
@@ -17,38 +16,41 @@
 		<!-- Probably add CSS to this -->
 		<div style="text-align:center" id="menu">
             <h2>WELCOME</h2>
-            <p>Please enter player's names: </p>
+            <p>Enter player names (optional):</p>
 			<p> Player 1:  <input autofocus type="text" id="Player1"></p>
 			<p> Player 2:  <input type="text" id="Player2"></p>
-			<p>Number of Ships: <span id="num-ships">1</span></p>
-			<input type="range" min="1" max="5" value="1" id="ship-slider">
-			<input type="button" id="complete" value="Done">
+			<p>Select number of ships:</p>
+			<p>
+				<input type="range" min="1" max="5" value="1" id="ship-slider">
+				<span id="num-ships">1</span>
+			</p>
+			<input type="button" id="complete" value="Start">
 		</div>
 		
 
-		<div id="both_boards">
+		<div id="both_boards" style="display:none">
 			<div class="board-container" id="board-container0">
 				<input type="text" class="player-name" id="firstPlayer">
-				<!--
-				<div class="coordinates"  id="coordinates0">
-					<p>Input coordinates for your ship(s) using the sample board (e.g. A1):</p>
-				</div>
-				-->
 				<table class="board" id="board0"></table>
 			</div>
 			<div class="board-container" id="board-container1">
 				<input type="text" class="player-name" id="secondPlayer">
-				<!--
+				<table class="board" id="board1"></table>
+			</div>
+		</div>
+		
+		<div id="controls" style="display:none">
+			<div id="message"></div>
+			<input type="button" id="switch-turn" value="Switch turn">
+			<!--
+				<div class="coordinates"  id="coordinates0">
+					<p>Input coordinates for your ship(s) using the sample board (e.g. A1):</p>
+				</div>
 				<div class="coordinates" id="coordinates1">
 					<p>Input coordinates for your ship(s) using the sample board (e.g. A1):</p>
 				</div>
-				-->
-				<table class="board" id="board1"></table>
-			</div>
-			<div id="message"></div>
-			<input type="button" id="switch-turn" value="Switch turn">
+			-->
 		</div>
-
 
 		<!-- Probably add CSS to this -->
 		<div id="modal" class="modal">
@@ -58,7 +60,7 @@
 		</div>
 
 		<script>
-			document.addEventListener("DOMContentLoaded",()=>{
+			document.addEventListener("DOMContentLoaded",() => {
 				window.executive = new Executive();
 			});
 		</script>

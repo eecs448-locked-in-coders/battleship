@@ -1,3 +1,7 @@
+/**
+* @class
+* @description Represents a single ship on a board
+**/
 class Ship {
 	/**
 	* @param length How long the ship is
