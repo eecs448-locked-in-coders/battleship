@@ -1,3 +1,7 @@
+/**
+*@class
+*
+*/
 class Space {
 	constructor(row, col) {
 		this.row = row;

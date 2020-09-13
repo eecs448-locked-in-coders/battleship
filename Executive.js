@@ -1,4 +1,5 @@
 class Executive {
+
     constructor() {
             let numbShips = 0;
             document.getElementById("ship-slider").addEventListener("input", e => {
@@ -7,7 +8,7 @@ class Executive {
             });
 
             //setting up the event for a click to change the menu for the board
-            document.getElementById("complete").addEventListener("click", () => { 
+            document.getElementById("complete").addEventListener("click", () => {
                 document.getElementById("firstPlayer").value = document.getElementById("Player1").value;
                 document.getElementById("secondPlayer").value = document.getElementById("Player2").value;
                 document.getElementById("menu").style.display = "none";
@@ -17,6 +18,6 @@ class Executive {
                 game.placeSampleShips();
                 game.renderBoards();
             })
-        
+
     }
 }

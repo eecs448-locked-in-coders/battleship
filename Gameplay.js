@@ -4,11 +4,11 @@ class Gameplay {
 		this.cols = cols;
 
 		// Which player's turn it is (players are false and true, aka 0 and 1)
-		this.turn = false; 
+		this.turn = false;
 		this.numbShips = numbShip;
 		this.board0 = new Board(rows, cols, this.numbShips);
 		this.board1 = new Board(rows, cols, this.numbShips);
-		
+		this.isSetup= false; //If false then we are in the ship placement phase (pre gameplay).
 		this.renderBoards(false);
 
 		document.getElementById("switch-turn").addEventListener("click", e => {
@@ -26,7 +26,7 @@ class Gameplay {
 					clearInterval(timer);
 				}
 				},1000);
-				
+
 		});
 	}
 
@@ -42,7 +42,7 @@ class Gameplay {
 		this.board0.render(document.getElementById("board0"), this, false, false);
 		this.board1.render(document.getElementById("board1"), this,false, false);
 		this.switchTurns(false);
-	}	
+	}
 	renderBoards(final) {
 		this.board0.render(document.getElementById("board0"), this, !this.turn, final);
 		this.board1.render(document.getElementById("board1"), this,this.turn, final);
@@ -53,13 +53,27 @@ class Gameplay {
 		this.board0.render(document.getElementById("board0"), this, true, true);
 		this.board1.render(document.getElementById("board1"), this, true, true);
 	}
-	
-	
-	clickSpace(cell,blocked) {
-		if (!blocked && !cell.isHit) {
-			cell.isHit = true;
-			this.renderBoards(true);	
-			this.switchTurns(true);
+
+
+	clickSpace(cell, isCurrentPlayer) {
+		let x = this.board1;
+		if (this.isSetup)
+		{
+			if (!isCurrentPlayer && !cell.isHit) {
+				cell.isHit = true;
+				if (cell.hasShip)
+				{
+					if (this.turn){
+						x = this.board0;
+					}
+					x.shipSpaces--;
+					if (x.checkWin()){
+						this.TheEnd();
+					}
+				}
+				this.renderBoards(true);
+				this.switchTurns(true);
+			}
 		}
 	}
 
@@ -78,6 +92,7 @@ class Gameplay {
 		this.board1.placeShip(3, 0, 5, false);
 		this.board1.placeShip(4, 3, 2, true);
 		this.board1.placeShip(5, 3, 7, true);
+		this.isSetup=true;
 	}
 }
 

@@ -34,6 +34,6 @@ class Ship {
 				coords.push([this.row, this.col+i]);
 			}
 		}
-		return coords;
+		return coords; //Returns an array of all the coordinates the ship is currently occupying.
 	}
 }
