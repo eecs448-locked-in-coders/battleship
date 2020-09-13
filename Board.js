@@ -13,6 +13,8 @@ class Board {
 		this.cells = [];
 		this.numShips = numShip;
 		this.shipSpaces = 0;
+		this.rows = rows;
+		this.cols = cols;
 		for (let row = 0; row < rows; row++) {
 			this.cells[row] = []; //Declaring cells as a 2-D array (a 1-D array who's elements point to another array).
 			for (let col = 0; col < cols; col++) {
@@ -67,15 +69,20 @@ class Board {
 			table.appendChild(tr);
 		}
 	}
-	// TODO: Validate coordinates are within bounds of board
+	
 	placeShip(length, row, col, isVertical) {
-		let ship = new Ship(length, row, col, isVertical);
-		this.ships.push(ship);
-		this.shipSpaces = this.shipSpaces + length;
-		let coords = ship.listIntersecting();
-		for (let coord of coords) {
-			this.cells[coord[0]][coord[1]].hasShip = true;
+		if ((row>=0 && row<this.rows) && (col>=0 && col<this.cols)) {
+			let ship = new Ship(length, row, col, isVertical);
+			this.ships.push(ship);
+			this.shipSpaces = this.shipSpaces + length;
+			let coords = ship.listIntersecting();
+			for (let coord of coords) {
+				this.cells[coord[0]][coord[1]].hasShip = true;
+			}
+		} else {
+			alert ("Ship out of board. Try again"); //Make this better
 		}
+
 	}
 
 	checkWin() {

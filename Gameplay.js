@@ -9,8 +9,6 @@
 **/
 class Gameplay {
 	constructor(rows, cols, numShip) {
-		this.rows = rows;
-		this.cols = cols;
 
 		this.turn = false;
 		this.isSetup = false;
@@ -54,11 +52,12 @@ class Gameplay {
 		this.board1.render(document.getElementById("board1"), this, this.turn, isFinal);
 	}
 
-	//FIX: doesn't show both boards
 	gameEnd() {
 		alert("You win!") //Improve: Say which player won and display it better
 		this.board0.render(document.getElementById("board0"), this, true, true);
 		this.board1.render(document.getElementById("board1"), this, true, true);
+		
+		document.getElementById("switch-turn").disabled = true;
 	}
 
 	clickSpace(cell, isCurrentPlayer) {
@@ -70,10 +69,16 @@ class Gameplay {
 					board.shipSpaces--;
 					if (board.checkWin()){
 						this.gameEnd();
+					} 
+					else{
+						this.renderBoards(true);
+						document.getElementById("switch-turn").style.display = "";
 					}
 				}
-				this.renderBoards(true);
-				document.getElementById("switch-turn").style.display = "";
+				else {
+					this.renderBoards(true);
+					document.getElementById("switch-turn").style.display = "";
+				}
 			}
 		}
 	}
@@ -82,6 +87,7 @@ class Gameplay {
 	* @description Used for testing gameplay before the ship placement feature is added
 	**/
 	placeSampleShips() {
+
 		this.board0.placeShip(1, 1, 1, false);
 		this.board0.placeShip(2, 4, 1, true);
 		this.board0.placeShip(3, 5, 0, true);
@@ -97,10 +103,3 @@ class Gameplay {
 		this.isSetup = true;
 	}
 }
-
-/*TODO:
-	fix TheEnd
-	finish ship placement
-	Validate coordinates are within bounds of board
-	restrict a cell to be clicked only once
-*/
