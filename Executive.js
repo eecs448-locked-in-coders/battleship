@@ -10,12 +10,14 @@ class Executive {
 			document.getElementById("num-ships").innerHTML = numShips;
 		});
 
-		//setting up the event for a click to change the menu for the board
+		// Setting up the event for a click to change the menu for the board
 		document.getElementById("complete").addEventListener("click", () => {
 			document.getElementById("firstPlayer").value = document.getElementById("Player1").value;
 			document.getElementById("secondPlayer").value = document.getElementById("Player2").value;
 			document.getElementById("menu").style.display = "none";
-			document.getElementById("both_boards").style.display = "block";
+			document.getElementById("controls").style.display = "";
+			document.getElementById("both_boards").style.display = "";
+			document.getElementById("switch-turn").style.display = "none";
 			this.game = new Gameplay(9, 9, numShips);
 			// For testing
 			this.game.placeSampleShips();

@@ -25,29 +25,29 @@
 		</div>
 		
 
-		<div id="both_boards">
+		<div id="both_boards" style="display:none">
 			<div class="board-container" id="board-container0">
 				<input type="text" class="player-name" id="firstPlayer">
-				<!--
-				<div class="coordinates"  id="coordinates0">
-					<p>Input coordinates for your ship(s) using the sample board (e.g. A1):</p>
-				</div>
-				-->
 				<table class="board" id="board0"></table>
 			</div>
 			<div class="board-container" id="board-container1">
 				<input type="text" class="player-name" id="secondPlayer">
-				<!--
+				<table class="board" id="board1"></table>
+			</div>
+		</div>
+		
+		<div id="controls" style="display:none">
+			<div id="message"></div>
+			<input type="button" id="switch-turn" value="Switch turn">
+			<!--
+				<div class="coordinates"  id="coordinates0">
+					<p>Input coordinates for your ship(s) using the sample board (e.g. A1):</p>
+				</div>
 				<div class="coordinates" id="coordinates1">
 					<p>Input coordinates for your ship(s) using the sample board (e.g. A1):</p>
 				</div>
-				-->
-				<table class="board" id="board1"></table>
-			</div>
-			<div id="message"></div>
-			<input type="button" id="switch-turn" value="Switch turn">
+			-->
 		</div>
-
 
 		<!-- Probably add CSS to this -->
 		<div id="modal" class="modal">

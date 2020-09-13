@@ -1,10 +1,14 @@
 body {
 	text-align: center;
-	background-image: url("ship_image_resize.jpg");
+	background-image: url("background.jpg");
 	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+	background-color: #4577ac; /* fallback before image loads */
 }
 
-h1{
+h1 {
 	text-align: left;
 	color: silver;
 
@@ -13,10 +17,21 @@ h1{
 	font-style: italic;
 	font-weight: bold;
 
-	border-style: groove;
-	border-color: darkgrey;
+	border: 2px groove darkgrey;
 	width: 290px;
-	margin:auto;
+	margin: auto;
+}
+
+#menu, #controls {
+	background: rgba(255, 255, 255, 0.9);
+	margin-top: 1em;
+	padding: 1em;
+	display: inline-block;
+	border: 2px groove darkgrey;
+}
+
+#menu h2 {
+	margin-top: 0;
 }
 
 .board-container {
@@ -28,21 +43,6 @@ h1{
 	text-align: center;
 	font-size: 16pt;
 	width: 98%;
-}
-
-#both_boards {
-	display: none;
-}
-
-#switch-turn {
-	display: none;
-	text-align: center;
-	margin: 5;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	-ms-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
 }
 
 .board {
@@ -87,13 +87,13 @@ h1{
 	/*
 		Shell hit ship, ship is hidden, red
 	*/
-	background-image: radial-gradient(#951d1d 30%, #c02626 30%, #c02626 60%, Transparent 40% );
+	background-image: radial-gradient(#951d1d 30%, #c02626 30%, #c02626 60%, transparent 40%);
 }
 .board td.ship.hit {
 	/*
 		Shell hit ship cell, red & grey
 	*/
-	background-image: radial-gradient(#951d1d 30%, #c02626 30%, #c02626 60%, #7b9095 40% );
+	background-image: radial-gradient(#951d1d 30%, #c02626 30%, #c02626 60%, #7b9095 40%);
 }
 
 .board td:before {
@@ -115,18 +115,17 @@ h1{
 	overflow: auto; 
 	background-color: rgb(0,0,0);
 	background-color: rgba(0,0,0,0.4);
-  }
+}
   
-  .modal-content {
-	background-color: #fefefe;
-	margin: 15% auto; 
-	padding: 20px;
-	border: 1px solid #888;
-	width: 80%; 
-  }
+	.modal-content {
+		background-color: #fefefe;
+		margin: 15% auto; 
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%; 
+	}
 
-.shipslider{
+.shipslider {
 	height: 20%;
 	width: 20%;
-
 }
