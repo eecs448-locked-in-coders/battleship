@@ -1,14 +1,18 @@
 /**
 * @class
 * @description Represents a single ship on a board
+* @member {number} length How many spaces long the ship should be
+* @member {number} row The row coordinate of the top end of the ship
+* @member {number} col The col coordinate of the left end of the ship
+* @member {boolean} isVertical Direction of ship (false = horizontal)
 **/
 class Ship {
 	/**
-	* @param length How long the ship is
-	* @param row The row coordinate of the top end of the ship
-	* @param col The col coordinate of the left end of the ship
-	* @param isVertical Direction of ship (false = horizontal)
-
+	* @description Creates a Ship object at the given size, location, and direction
+	* @param {number} length How many spaces long the ship should be
+	* @param {number} row The row coordinate of the top end of the ship
+	* @param {number} col The col coordinate of the left end of the ship
+	* @param {boolean} isVertical Direction of ship (false = horizontal)
 	**/
 	constructor(length, row, col, isVertical) {
 		this.length = length;
