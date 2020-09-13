@@ -16,7 +16,7 @@ class Board {
 		for (let row = 0; row < rows; row++) {
 			this.cells[row] = []; //Declaring cells as a 2-D array (a 1-D array who's elements point to another array).
 			for (let col = 0; col < cols; col++) {
-				this.cells[row][col] = new Space(col, row);
+				this.cells[row][col] = new Space(row, col);
 			}
 		}
 	}

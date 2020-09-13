@@ -20,7 +20,6 @@ class Executive {
 			document.getElementById("switch-turn").style.display = "none";
 			this.game = new Gameplay(9, 9, numShips);
 			// For testing
-			this.game.placeSampleShips();
 			this.game.renderBoards();
 		});
     }
