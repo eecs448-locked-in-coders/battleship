@@ -13,7 +13,6 @@ class Board {
 		this.cells = [];
 		this.numShips = numShip;
 		this.shipSpaces = 0;
-
 		for (let row = 0; row < rows; row++) {
 			this.cells[row] = []; //Declaring cells as a 2-D array (a 1-D array who's elements point to another array).
 			for (let col = 0; col < cols; col++) {
@@ -60,23 +59,13 @@ class Board {
 				if (cell.isHit && !cell.hasShip) td.classList.add("miss");
 				if (cell.isHit && cell.hasShip) td.classList.add("hit");
 				if (!final) {
-					td.addEventListener("click", e =>{
-						if (cell.hasShip) {
-							this.shipSpaces--;
-							if (this.checkWin()){
-								game.TheEnd();
-							}
-						}
-						game.clickSpace(cell,isCurrentPlayer)
-					});
->>>>>>> ba79257397b21a1deb9527e199098815b04d4527
+					td.addEventListener("click", e=> game.clickSpace (cell, isCurrentPlayer));
 				}
 				tr.appendChild(td);
 			}
 			table.appendChild(tr);
 		}
 	}
-
 	// TODO: Validate coordinates are within bounds of board
 	placeShip(length, row, col, isVertical) {
 		let ship = new Ship(length, row, col, isVertical);
