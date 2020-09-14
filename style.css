@@ -49,8 +49,8 @@ footer {
 	text-align: left;
 	color: #333;
 	font-family: "Times New Roman";
-	font-size: 20px;
-	padding: 10px 10px 10px 10px;
+	font-size: 18px;
+	padding: 8px;
 	position: fixed;
 	left: 0;
 	bottom: 0;
@@ -93,7 +93,7 @@ input {
 .player-name {
 	text-align: center;
 	font-size: 16pt;
-	width: 98%;
+	width: 100%;
 }
 
 .board {

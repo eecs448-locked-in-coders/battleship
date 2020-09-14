@@ -22,17 +22,6 @@ class Ship {
 	}
 
 	/**
-	* @return Whether the given row, col coordinates intersect the ship
-	**/
-	/*isIntersecting(coords) {
-		for (let i =0; i<coords.length; i++)
-		{
-			
-		}
-		return (false);
-	}*/
-
-	/**
 	* @return An array of (row, col) pairs of coordinates
 	**/
 	listIntersecting() {
@@ -46,6 +35,6 @@ class Ship {
 				coords.push([this.row, this.col+i]);
 			}
 		}
-		return coords; //Returns an array of all the coordinates the ship is currently occupying.
+		return coords;
 	}
 }

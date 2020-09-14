@@ -88,12 +88,12 @@ class Gameplay {
 	* @description Render the boards, showing ships on both boards, and display a victory message
 	**/
 	gameEnd() {
-		document.getElementById('message').innerHTML="YOU WIN!!!";
+		this.msg("YOU WIN!!!");
 		this.board0.render(document.getElementById("board0"), this, true, true);
 		this.board1.render(document.getElementById("board1"), this, true, true);
-		
-		document.getElementById("switch-turn").disabled = true;
+		document.getElementById("switch-turn").style.display = "";
 	}
+	
 	/**
 	* @description Handles a space being clicked on either board
 	* @param {Space} cell The Space object that was clicked
@@ -106,12 +106,12 @@ class Gameplay {
 				cell.isHit = true;
 				if (cell.hasShip) {
 					let board = this.turn ? this.board0 : this.board1;
-					document.getElementById('message').innerHTML="Hit!";
+					this.msg("Hit!");
 					board.shipSpaces--;
 					if (board.checkWin()){
 						this.gameEnd();
 					} 
-					else{
+					else {
 						this.renderBoards(true);
 						document.getElementById("switch-turn").style.display = "";
 					}
@@ -119,7 +119,7 @@ class Gameplay {
 				else {
 					this.renderBoards(true);
 					document.getElementById("switch-turn").style.display = "";
-					document.getElementById('message').innerHTML=" Miss!";
+					this.msg("Miss.")
 				}
 			}
 		}
@@ -134,27 +134,28 @@ class Gameplay {
 	* @param {boolean} isVertical Whether the ship is vertical or horizontal
 	**/
 	newShip(cell, isVertical) {
-		if (this.placedshipcount < this.numShips) {
-			if(!this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, isVertical)) this.renderBoards(false);
-			else {
-				this.renderBoards(false);
-				this.placedshipcount = this.placedshipcount + 1;
-			}
+		let placedShip = this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, isVertical);
+		if (placedShip !== true) { // Failed to place ship in a valid location
+			this.msg(placedShip);
+			this.renderBoards(false);
 		}
-		else if (this.placedshipcount == this.numShips) {
-			if(!this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, isVertical)) this.renderBoards(false);
-			else {
-				this.renderBoards(true);
-				document.getElementById("switch-turn").style.display = "";
-				if (this.board0.ships.length == this.board1.ships.length) {
-					this.isSetup = true;
-				}
-			}
+		else if (this.placedshipcount < this.numShips) { // Placed successfully and still more ships to place
+			this.placedshipcount++;
+			this.renderBoards(false);
 		}
-		else {
-			document.getElementById("switch-turn").style.display = "";
+		else { // Last ship placed
 			this.renderBoards(true);
+			document.getElementById("switch-turn").style.display = "";
+			if (this.board0.ships.length == this.board1.ships.length) {
+				this.isSetup = true;
+			}
 		}
 	}
 
+	/**
+	* @description Display a message to the current player
+	**/
+	msg(message) {
+		document.getElementById('message').innerHTML = message;
+	}
 }

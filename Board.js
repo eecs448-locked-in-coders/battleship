@@ -92,40 +92,37 @@ class Board {
 		if (this.checkBoundaries(length, row, col, isVertical)) {
 			let ship = new Ship(length, row, col, isVertical);
 			let coords = ship.listIntersecting();
-			if (this.isIntersecting(coords))
-			{
-				alert ("Your ship overlaps with another. Try Again");
-				return (false);
+			if (this.isIntersecting(coords)) {
+				return "This location would overlap with another ship. Try again.";
 			}
 			this.ships.push(ship);
 			this.shipSpaces = this.shipSpaces + length;
 			for (let coord of coords) {
 				this.cells[coord[0]][coord[1]].hasShip = true;
 			}
-			return(true);
+			return true;
 
 		} else {
-			alert ("Ship out of board. Try again"); //Make this better
-			return(false);
+			return "This location would go off the edge of the board. Try again.";
 		}
 
 	}
 
 	checkBoundaries(length, row, col, isVertical) {
-		if (length>1) {
+		if (length > 1) {
 			if (isVertical) {
 				for (let i = 1; i < length; i++) {
 					if (row+i >= this.rows) return(false);
 				}
-				return(true);
+				return true;
 			} else {
 				for (let i = 1; i < length; i++) {
 					if (col+i >= this.cols) return(false);
 				}
-				return(true);
+				return true;
 			}
 		}
-		return (true);
+		return true;
 	}
 
 
@@ -134,21 +131,17 @@ class Board {
 	* @return If all ship spaces on this board have been sunk
 	**/
 	checkWin() {
-		return (this.shipSpaces == 0);
+		return this.shipSpaces == 0;
 	}
 
 	isIntersecting(coords) {
-		for (let i=0; i<coords.length; i++)
-		{
+		for (let i = 0; i < coords.length; i++) {
 			//console.log(coords[0]);
 			let row = coords[i][0];
 			let column = coords[i][1];
-			if (this.cells[row][column].hasShip)
-			{
-				return (true);
-			}
+			if (this.cells[row][column].hasShip) return true;
 		}
-		return (false);
+		return false;
 	}
 
 }
