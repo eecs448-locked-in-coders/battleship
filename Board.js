@@ -67,12 +67,7 @@ class Board {
 				if (cell.isHit && cell.hasShip) td.classList.add("hit");
 				if (!preventClicking) {
 					// Each cell has its own event listenser that listens for clicks on itself
-					let isVertical = false;
-					document.addEventListener('keydown', (event) => {
-						const key = event.code;
-						if (key == "Space" ) isVertical = true;
-					});
-					td.addEventListener('click', e => game.clickSpace(cell, isCurrentPlayer, isVertical));
+					td.addEventListener('click', e => game.clickSpace(cell, isCurrentPlayer));
 				}
 				tr.appendChild(td);
 			}

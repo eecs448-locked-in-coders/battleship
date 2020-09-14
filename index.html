@@ -42,12 +42,17 @@
 
 		<div id="controls" style="display:none">
 			<div id="message"></div>
+			<div id="dir-container">
+				Direction:
+				<input type="radio" name="dir" id="vertical" value="true"><label for="vertical">Down</label>
+				<input type="radio" name="dir" id="horizontal" value="false" checked><label for="horizontal">Right</label>
+			</div>
 			<input type="button" id="switch-turn" value="Switch turn">
 		</div>
 
 		<div id="modal" class="modal">
 			<div class="modal-content">
-				<p id="modal-text"></p>
+				<p>Next turn in <span id="turn-switch-time"></span> seconds!</p>
 				<input type="button" value="Switch now" id="switch-now">
 			</div>
 		</div>

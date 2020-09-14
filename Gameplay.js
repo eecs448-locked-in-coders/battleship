@@ -8,6 +8,7 @@
 * @member isSetup {boolean} Whether the ship placement phase of gameplay has been completed
 * @member board0 {Board} Player false's board
 * @member board1 {Board} Player true's board
+* @member isVertical {boolean} Whether the ship is vertical or horizontal during ship placement
 **/
 class Gameplay {
 	/**
@@ -28,6 +29,13 @@ class Gameplay {
 		this.board0 = new Board(rows, cols, this.numShips);
 		this.board1 = new Board(rows, cols, this.numShips);
 		this.renderBoards(false);
+		
+		this.isVertical = false;
+		for (let radio of document.getElementsByName("dir")) {
+			radio.addEventListener("change", e => {
+				if (e.target.checked) this.isVertical = e.target.value == "true";
+			});
+		}
 
 		document.getElementById("switch-turn").addEventListener("click", e => {
 			if (this.isSetup) {
@@ -35,10 +43,10 @@ class Gameplay {
 				let modal = document.getElementById("modal");
 				modal.style.display = "block";
 				let time = 5;
-				document.getElementById("modal-text").innerText = "Next turn in " + time + " seconds!";
+				document.getElementById("turn-switch-time").innerText = time;
 				this.turnTimer = setInterval(() => {
 					time--;
-					document.getElementById("modal-text").innerText = "Next turn in " + time + " seconds!";
+					document.getElementById("turn-switch-time").innerText = time;
 					if (time <= 0) this.switchTurns();
 				}, 1000);
 			}
@@ -94,9 +102,9 @@ class Gameplay {
 	* @description Handles a space being clicked on either board
 	* @param {Space} cell The Space object that was clicked
 	* @param {boolean} isCurrentPlayer Whether the board that was clicked belongs to the player whose turn it currently is
-	* @param {boolean} isVertical Whether the ship is vertical or horizontal during ship placement
+	
 	**/
-	clickSpace(cell, isCurrentPlayer, isVertical) {
+	clickSpace(cell, isCurrentPlayer) {
 		if (this.isSetup) {
 			if (!isCurrentPlayer && !cell.isHit) {
 				cell.isHit = true;
@@ -120,18 +128,17 @@ class Gameplay {
 			}
 		}
 		else if (isCurrentPlayer) { // During setup phase, you click your own board
-			this.newShip(cell, isVertical);
+			this.newShip(cell);
 		}
 	}
 
 	/**
 	* @description Places a new ship on the current player's board
 	* @param cell {Space} The space the user clicked on, which will be the top/left end of the new ship
-	* @param {boolean} isVertical Whether the ship is vertical or horizontal
 	**/
-	newShip(cell, isVertical) {
+	newShip(cell) {
 		let board = this.turn ? this.board1 : this.board0;
-		let placedShip = board.placeShip(this.placedshipcount, cell.row, cell.col, isVertical);
+		let placedShip = board.placeShip(this.placedshipcount, cell.row, cell.col, this.isVertical);
 		if (placedShip !== true) { // Failed to place ship in a valid location
 			this.msg(placedShip);
 			this.renderBoards(false);
