@@ -88,13 +88,12 @@ class Gameplay {
 	* @description Render the boards, showing ships on both boards, and display a victory message
 	**/
 	gameEnd() {
-		alert("You win!") //Improve: Say which player won and display it better
+		document.getElementById('message').innerHTML="YOU WIN!!!";
 		this.board0.render(document.getElementById("board0"), this, true, true);
 		this.board1.render(document.getElementById("board1"), this, true, true);
 		
 		document.getElementById("switch-turn").disabled = true;
 	}
-
 	/**
 	* @description Handles a space being clicked on either board
 	* @param {Space} cell The Space object that was clicked
@@ -107,6 +106,7 @@ class Gameplay {
 				cell.isHit = true;
 				if (cell.hasShip) {
 					let board = this.turn ? this.board0 : this.board1;
+					document.getElementById('message').innerHTML="Hit!";
 					board.shipSpaces--;
 					if (board.checkWin()){
 						this.gameEnd();
@@ -119,6 +119,7 @@ class Gameplay {
 				else {
 					this.renderBoards(true);
 					document.getElementById("switch-turn").style.display = "";
+					document.getElementById('message').innerHTML=" Miss!";
 				}
 			}
 		}
