@@ -17,8 +17,8 @@
 		<div style="text-align:center" id="menu">
             <h2>WELCOME</h2>
             <p>Enter player names (optional):</p>
-			<p> Player 1:  <input autofocus type="text" id="Player1"></p>
-			<p> Player 2:  <input type="text" id="Player2"></p>
+			<p> Player 1:  <input autofocus type="text" id="player0-name-input"></p>
+			<p> Player 2:  <input type="text" id="player1-name-input"></p>
 			<p>Select number of ships:</p>
 			<p>
 				<input type="range" min="1" max="5" value="1" id="ship-slider">
@@ -31,11 +31,11 @@
 
 		<div id="both_boards" style="display:none">
 			<div class="board-container" id="board-container0">
-				<input type="text" class="player-name" id="firstPlayer">
+				<input type="text" class="player-name" id="player0-name">
 				<table class="board" id="board0"></table>
 			</div>
 			<div class="board-container" id="board-container1">
-				<input type="text" class="player-name" id="secondPlayer">
+				<input type="text" class="player-name" id="player1-name">
 				<table class="board" id="board1"></table>
 			</div>
 		</div>
