@@ -68,12 +68,7 @@ class Board {
 				if (cell.isHit && cell.hasShip) td.classList.add("hit");
 				if (!preventClicking) {
 					// Each cell has its own event listenser that listens for clicks on itself
-					let isVertical = false;
-					document.addEventListener('keydown', (event) => {
-						const key = event.code;
-						if (key == "Space" ) isVertical = true;
-					});
-					td.addEventListener('click', e => game.clickSpace(cell, isCurrentPlayer, isVertical));
+					td.addEventListener('click', e => game.clickSpace(cell, isCurrentPlayer));
 				}
 				tr.appendChild(td);
 			}
@@ -93,67 +88,48 @@ class Board {
 		if (this.checkBoundaries(length, row, col, isVertical)) {
 			let ship = new Ship(length, row, col, isVertical);
 			let coords = ship.listIntersecting();
-			if (this.isIntersecting(coords))
-			{
-				alert ("Your ship overlaps with another. Try Again");
-				return (false);
+			if (this.isIntersecting(coords)) {
+				return "This location would overlap with another ship. Try again.";
 			}
 			this.ships.push(ship);
-			this.shipSpaces = this.shipSpaces + length;
+			this.shipSpaces += length;
 			for (let coord of coords) {
 				this.cells[coord[0]][coord[1]].hasShip = true;
 			}
-			return(true);
+			return true;
 
 		} else {
-			alert ("Ship out of board. Try again"); //Make this better
-			return(false);
+			return "This location would go off the edge of the board. Try again.";
 		}
 
 	}
 
 	checkBoundaries(length, row, col, isVertical) {
-		if (length>1) {
+		if (length > 1) {
 			if (isVertical) {
-				for (let i = 1; i < length; i++) {
-					if (row+i >= this.rows) return(false);
-				}
-				return(true);
+				if (row+length > this.rows) return false;
 			} else {
-				for (let i = 1; i < length; i++) {
-					if (col+i >= this.cols) return(false);
-				}
-				return(true);
+				if (col+length > this.cols) return false;
 			}
 		}
-		return (true);
+		return true;
 	}
-
 
 	/**
 	* @description Determines whether the game has been won on this board
 	* @return If all ship spaces on this board have been sunk
 	**/
 	checkWin() {
-		return (this.shipSpaces == 0);
+		return this.shipSpaces == 0;
 	}
 
 	/**
 	* @return Whether the given row, col coordinates intersect the ship
 	**/
 	isIntersecting(coords) {
-		for (let i=0; i<coords.length; i++)
-		{
-			//console.log(coords[0]);
-			let row = coords[i][0];
-			let column = coords[i][1];
-			if (this.cells[row][column].hasShip)
-			{
-				return (true);
-			}
+		for (let coord of coords) {
+			if (this.cells[coord[0]][coord[1]].hasShip) return true;
 		}
-		return (false);
+		return false;
 	}
-
 }
-
