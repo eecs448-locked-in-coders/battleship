@@ -47,7 +47,7 @@ class Gameplay {
 			else {
 				this.placedshipcount = 1;
 				this.focusedboard = this.board1;
-				if (this.turn == false) {
+				if (!this.turn) {
 					this.turn = true;
 				}
 				document.getElementById("switch-turn").style.display = "none";
@@ -84,57 +84,71 @@ class Gameplay {
 		this.board1.render(document.getElementById("board1"), this, this.turn, preventClicking);
 	}
 
-	//FIX: doesn't show both boards
 	/**
 	* @description Render the boards, showing ships on both boards, and display a victory message
 	**/
 	gameEnd() {
-		alert("You win!") //Improve: Say which player won and display it better
+		document.getElementById('message').innerHTML="YOU WIN!!!";
 		this.board0.render(document.getElementById("board0"), this, true, true);
 		this.board1.render(document.getElementById("board1"), this, true, true);
+		
+		document.getElementById("switch-turn").disabled = true;
 	}
-
 	/**
 	* @description Handles a space being clicked on either board
 	* @param {Space} cell The Space object that was clicked
 	* @param {boolean} isCurrentPlayer Whether the board that was clicked belongs to the player whose turn it currently is
+	* @param {boolean} isVertical Whether the ship is vertical or horizontal during ship placement
 	**/
-	clickSpace(cell, isCurrentPlayer) {
+	clickSpace(cell, isCurrentPlayer, isVertical) {
 		if (this.isSetup) {
 			if (!isCurrentPlayer && !cell.isHit) {
 				cell.isHit = true;
 				if (cell.hasShip) {
 					let board = this.turn ? this.board0 : this.board1;
+					document.getElementById('message').innerHTML="Hit!";
 					board.shipSpaces--;
 					if (board.checkWin()){
 						this.gameEnd();
+					} 
+					else{
+						this.renderBoards(true);
+						document.getElementById("switch-turn").style.display = "";
 					}
 				}
-				this.renderBoards(true);
-				document.getElementById("switch-turn").style.display = "";
+				else {
+					this.renderBoards(true);
+					document.getElementById("switch-turn").style.display = "";
+					document.getElementById('message').innerHTML=" Miss!";
+				}
 			}
 		}
 		else {
-			this.newShip(cell);
+			this.newShip(cell, isVertical);
 		}
 	}
 
 	/**
 	* @description Places a new ship on the current player's board
 	* @param cell {Space} The space the user clicked on, which will be the top/left end of the new ship
+	* @param {boolean} isVertical Whether the ship is vertical or horizontal
 	**/
-	newShip(cell) {
+	newShip(cell, isVertical) {
 		if (this.placedshipcount < this.numShips) {
-			this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, false);
-			this.renderBoards(false);
-			this.placedshipcount = this.placedshipcount + 1;
+			if(!this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, isVertical)) this.renderBoards(false);
+			else {
+				this.renderBoards(false);
+				this.placedshipcount = this.placedshipcount + 1;
+			}
 		}
 		else if (this.placedshipcount == this.numShips) {
-			this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, false)
-			this.renderBoards(true);
-			document.getElementById("switch-turn").style.display = "";
-			if (this.board0.ships.length == this.board1.ships.length) {
-				this.isSetup = true;
+			if(!this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, isVertical)) this.renderBoards(false);
+			else {
+				this.renderBoards(true);
+				document.getElementById("switch-turn").style.display = "";
+				if (this.board0.ships.length == this.board1.ships.length) {
+					this.isSetup = true;
+				}
 			}
 		}
 		else {
@@ -143,29 +157,4 @@ class Gameplay {
 		}
 	}
 
-	/**
-	* @description Used for testing gameplay before the ship placement feature is added
-	**/
-	placeSampleShips() {
-		this.board0.placeShip(1, 1, 1, false);
-		this.board0.placeShip(2, 4, 1, true);
-		//this.board0.placeShip(3, 5, 0, true);
-		//this.board0.placeShip(4, 2, 3, false);
-		//this.board0.placeShip(5, 7, 3, false);
-
-		this.board1.placeShip(1, 1, 1, true);
-		this.board1.placeShip(2, 1, 4, false);
-		//this.board1.placeShip(3, 0, 5, false);
-		//this.board1.placeShip(4, 3, 2, true);
-		//this.board1.placeShip(5, 3, 7, true);
-
-		this.isSetup = true;
-	}
 }
-
-/*TODO:
-	fix TheEnd
-	finish ship placement
-	Validate coordinates are within bounds of board
-	restrict a cell to be clicked only once
-*/
