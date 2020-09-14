@@ -1,15 +1,16 @@
 /**
-* @class
-* @description Sets up the game with the user selected number of ships
-* @member numShips {number} The number of ships each player will have
-* @member rows {number} The number of rows each board will have
-* @member cols {number} The number of columns each board will have
-**/
+ * @class
+ */
 class Executive {
-	/**
-	* @description Create event listeners on the game setup menu
-	**/
+/**
+ * @description Sets up the game with the user selected number of ships. Constructor create event listeners on the game setup menu
+ */
     constructor() {
+		/**
+		* @member numShips {number} The number of ships each player will have
+ 		* @member rows {number} The number of rows each board will have
+ 		* @member cols {number} The number of columns each board will have
+ 		*/
 		this.numShips = document.getElementById("ship-slider").value;
 		// Future enhancement: Allow the user to select the size of the board
 		this.rows = 9;
