@@ -27,7 +27,6 @@ class Gameplay {
 
 		this.board0 = new Board(rows, cols, this.numShips);
 		this.board1 = new Board(rows, cols, this.numShips);
-		this.focusedboard = this.board0;
 		this.renderBoards(false);
 
 		document.getElementById("switch-turn").addEventListener("click", e => {
@@ -43,12 +42,9 @@ class Gameplay {
 					if (time <= 0) this.switchTurns();
 				}, 1000);
 			}
-			else {
+			else { // Switch to second player placing their ships
 				this.placedshipcount = 1;
-				this.focusedboard = this.board1;
-				if (!this.turn) {
-					this.turn = true;
-				}
+				this.turn = true;
 				document.getElementById("switch-turn").style.display = "none";
 				this.renderBoards(false);
 			}
@@ -73,7 +69,6 @@ class Gameplay {
 	blankBoards() {
 		this.board0.render(document.getElementById("board0"), this, false, true);
 		this.board1.render(document.getElementById("board1"), this, false, true);
-
 	}
 
 	/**
@@ -135,7 +130,8 @@ class Gameplay {
 	* @param {boolean} isVertical Whether the ship is vertical or horizontal
 	**/
 	newShip(cell, isVertical) {
-		let placedShip = this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, isVertical);
+		let board = this.turn ? this.board1 : this.board0;
+		let placedShip = board.placeShip(this.placedshipcount, cell.row, cell.col, isVertical);
 		if (placedShip !== true) { // Failed to place ship in a valid location
 			this.msg(placedShip);
 			this.renderBoards(false);
@@ -147,7 +143,7 @@ class Gameplay {
 		else { // Last ship placed
 			this.renderBoards(true);
 			document.getElementById("switch-turn").style.display = "";
-			if (this.board0.ships.length == this.board1.ships.length) {
+			if (this.board0.ships.length == this.board1.ships.length) { // Both players have placed their ships
 				this.isSetup = true;
 			}
 		}
@@ -157,6 +153,6 @@ class Gameplay {
 	* @description Display a message to the current player
 	**/
 	msg(message) {
-		document.getElementById('message').innerHTML = message;
+		document.getElementById("message").innerHTML = message;
 	}
 }
