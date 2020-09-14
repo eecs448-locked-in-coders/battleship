@@ -1,3 +1,7 @@
+* {
+	box-sizing: border-box;
+}
+
 body {
 	text-align: center;
 	background-image: url("background.jpg");
@@ -37,6 +41,10 @@ p {
 	font-family: "Copperplate Gothic";
 }
 
+#push {
+	height: 60px;
+}
+
 footer {
 	text-align: left;
 	color: #333;
@@ -44,11 +52,16 @@ footer {
 	font-size: 20px;
 	padding: 10px 10px 10px 10px;
 	position: fixed;
+	left: 0;
 	bottom: 0;
 	background: white;
 
-	border: 2px groove darkgrey;
-	width: 500px;
+	border-top: 2px groove darkgrey;
+	width: 100%;
+}
+
+#links {
+	float: right;
 }
 
 input {
