@@ -2,11 +2,11 @@
  * @class
  */
 class Executive {
-/**
- * @description Sets up the game with the user selected number of ships. Constructor create event listeners on the game setup menu
- */
+	/**
+	 * @description Sets up the game with the user selected number of ships. Constructor create event listeners on the game setup menu
+	 */
     constructor() {
-		/**
+		/*
 		* @member numShips {number} The number of ships each player will have
  		* @member rows {number} The number of rows each board will have
  		* @member cols {number} The number of columns each board will have

@@ -3,7 +3,7 @@
  */
 class Ship {
 	/**
-	* @description Represents a single ship on a board. Creates a Ship object at the given size, location, and direction
+	* @description Represents a single ship on a board. Creates a Ship object at the given size, location, and direction.
 	* @param {number} length How many spaces long the ship should be
 	* @param {number} row The row coordinate of the top end of the ship
 	* @param {number} col The col coordinate of the left end of the ship

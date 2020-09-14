@@ -9,7 +9,7 @@ class Gameplay {
 	* @param numShips {number} The number of ships each player has
 	**/
 	constructor(rows, cols, numShip) {
-		/**
+		/*
 		 * @member turn {boolean} Which player's turn it is - false is board0 (left) and true is board1 (right)
 		 * @member isSetup {boolean} Whether the ship placement phase of gameplay has been completed
 		 * @member board0 {Board} Player false's board

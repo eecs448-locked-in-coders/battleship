@@ -8,7 +8,7 @@ class Space {
 * @param {number} col The column the space is in on its board
 */
 	constructor(row, col) {
-		/**
+		/*
 		* @member hasShip Whether any ship contains this space
 		* @member isHit Whether this space has been attacked (regardless of if it has a ship)
 		*/
