@@ -24,9 +24,13 @@ class Ship {
 	/**
 	* @return Whether the given row, col coordinates intersect the ship
 	**/
-	isIntersecting(row, col) {
-
-	}
+	/*isIntersecting(coords) {
+		for (let i =0; i<coords.length; i++)
+		{
+			
+		}
+		return (false);
+	}*/
 
 	/**
 	* @return An array of (row, col) pairs of coordinates

@@ -130,7 +130,7 @@ class Gameplay {
 			this.placedshipcount = this.placedshipcount + 1;
 		}
 		else if (this.placedshipcount == this.numShips) {
-			this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, false);
+			this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, false)
 			this.renderBoards(true);
 			document.getElementById("switch-turn").style.display = "";
 			if (this.board0.ships.length == this.board1.ships.length) {

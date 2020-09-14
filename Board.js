@@ -86,6 +86,10 @@ class Board {
 		this.ships.push(ship);
 		this.shipSpaces = this.shipSpaces + length;
 		let coords = ship.listIntersecting();
+		if (this.isIntersecting(coords))
+		{
+			return (false);
+		}
 		for (let coord of coords) {
 			this.cells[coord[0]][coord[1]].hasShip = true;
 		}
@@ -98,4 +102,20 @@ class Board {
 	checkWin() {
 		return (this.shipSpaces == 0);
 	}
+
+	isIntersecting(coords) {
+		for (let i=0; i<coords.length; i++)
+		{
+			console.log(coords[0]);
+			let x = coords[i][0];
+			let y = coords[i][1];
+			if (this.cells[x][y].hasShip)
+			{
+				return (true);
+			}
+		}
+		return (false);
+	}
+
 }
+
