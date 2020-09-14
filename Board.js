@@ -17,6 +17,8 @@ class Board {
 		this.cells = [];
 		this.numShips = numShip;
 		this.shipSpaces = 0;
+		this.rows = rows;
+		this.cols = cols;
 		for (let row = 0; row < rows; row++) {
 			this.cells[row] = []; //Declaring cells as a 2-D array (a 1-D array who's elements point to another array).
 			for (let col = 0; col < cols; col++) {
@@ -30,7 +32,7 @@ class Board {
 	* @param {HTMLTableElement} table The table to render the board to
 	* @param {Gameplay} game to use the clickSpace method of
 	* @param {boolean} isCurrentPlayer for whether all ship locations should be visible
-	* @param {boolean} isOver for whether the game is already won
+	* @param {boolean} preventClicking to restrict a player to click again
 	**/
 	render(table, game, isCurrentPlayer, preventClicking) {
 		table.innerHTML = ""; // Remove any existing cells
@@ -65,7 +67,12 @@ class Board {
 				if (cell.isHit && cell.hasShip) td.classList.add("hit");
 				if (!preventClicking) {
 					// Each cell has its own event listenser that listens for clicks on itself
-					td.addEventListener("click", e => game.clickSpace(cell, isCurrentPlayer)); 
+					let isVertical = false;
+					document.addEventListener('keydown', (event) => {
+						const key = event.code;
+						if (key == "Space" ) isVertical = true;
+					});
+					td.addEventListener('click', e => game.clickSpace(cell, isCurrentPlayer, isVertical));
 				}
 				tr.appendChild(td);
 			}
@@ -82,14 +89,40 @@ class Board {
 	* @param {boolean} isVertical Direction of ship (false = horizontal)
 	**/
 	placeShip(length, row, col, isVertical) {
-		let ship = new Ship(length, row, col, isVertical);
-		this.ships.push(ship);
-		this.shipSpaces = this.shipSpaces + length;
-		let coords = ship.listIntersecting();
-		for (let coord of coords) {
-			this.cells[coord[0]][coord[1]].hasShip = true;
+		if (this.checkBoundaries(length, row, col, isVertical)) {
+			let ship = new Ship(length, row, col, isVertical);
+			this.ships.push(ship);
+			this.shipSpaces = this.shipSpaces + length;
+			let coords = ship.listIntersecting();
+			for (let coord of coords) {
+				this.cells[coord[0]][coord[1]].hasShip = true;
+			}
+			return(true);
+
+		} else {
+			alert ("Ship out of board. Try again"); //Make this better
+			return(false);
 		}
+
 	}
+
+	checkBoundaries(length, row, col, isVertical) {
+		if (length>1) {
+			if (isVertical) {
+				for (let i = 1; i < length; i++) {
+					if (row+i >= this.rows) return(false);
+				}
+				return(true);
+			} else {
+				for (let i = 1; i < length; i++) {
+					if (col+i >= this.cols) return(false);
+				}
+				return(true);
+			}
+		}
+		return (true);
+	}
+
 
 	/**
 	* @description Determines whether the game has been won on this board
