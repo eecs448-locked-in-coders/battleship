@@ -91,7 +91,7 @@ class Board {
 				return "This location would overlap with another ship. Try again.";
 			}
 			this.ships.push(ship);
-			this.shipSpaces = this.shipSpaces + length;
+			this.shipSpaces += length;
 			for (let coord of coords) {
 				this.cells[coord[0]][coord[1]].hasShip = true;
 			}
@@ -106,20 +106,13 @@ class Board {
 	checkBoundaries(length, row, col, isVertical) {
 		if (length > 1) {
 			if (isVertical) {
-				for (let i = 1; i < length; i++) {
-					if (row+i >= this.rows) return(false);
-				}
-				return true;
+				if (row+length > this.rows) return false;
 			} else {
-				for (let i = 1; i < length; i++) {
-					if (col+i >= this.cols) return(false);
-				}
-				return true;
+				if (col+length > this.cols) return false;
 			}
 		}
 		return true;
 	}
-
 
 	/**
 	* @description Determines whether the game has been won on this board
@@ -130,14 +123,9 @@ class Board {
 	}
 
 	isIntersecting(coords) {
-		for (let i = 0; i < coords.length; i++) {
-			//console.log(coords[0]);
-			let row = coords[i][0];
-			let column = coords[i][1];
-			if (this.cells[row][column].hasShip) return true;
+		for (let coord of coords) {
+			if (this.cells[coord[0]][coord[1]].hasShip) return true;
 		}
 		return false;
 	}
-
 }
-
