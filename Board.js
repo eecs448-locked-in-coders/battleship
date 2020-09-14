@@ -1,13 +1,17 @@
 /**
  * @class
  * @description Represents a single player's board, storing the status of each space and ship
- * @member ships Array of ships in the current board
- * @member cells 2D array of cell containing space objects
- * @member numShips Number of ships in the current board
- * @member shipSpaces Number of spaces/cells that are occupied by a ship
- * idk if this could be considered good documentation for JSDOC but I guess it'll work for now
+ * @member {Ship[]]} ships Array of ships in the current board
+ * @member {Space[][]} cells 2D array of cell containing space objects
+ * @member {number} numShips of ships in the current board
+ * @member {number} shipSpaces of spaces/cells that are occupied by a ship
  */
 class Board {
+	/**
+	* @description Initializes the 2D array of Space objects
+	* @param {number} rows The number of rows the board will have
+	* @param {number} cols The number of columns the board will have
+	**/
 	constructor(rows, cols, numShip) {
 		this.ships = [];
 		this.cells = [];
@@ -18,18 +22,19 @@ class Board {
 		for (let row = 0; row < rows; row++) {
 			this.cells[row] = []; //Declaring cells as a 2-D array (a 1-D array who's elements point to another array).
 			for (let col = 0; col < cols; col++) {
-				this.cells[row][col] = new Space(col, row);
+				this.cells[row][col] = new Space(row, col);
 			}
 		}
 	}
 
 	/**
-	* @param table The DOM element to render the board to
-	* @param game Object to use the clickSpace method of
-	* @param isCurrentPlayer Boolean for whether all ship locations should be visible
-	* @param isOver Boolean for whether the game is already won
+	* @description Render the current state of the board to an HTML table element, optionally showing ships and allowing clicking
+	* @param {HTMLTableElement} table The table to render the board to
+	* @param {Gameplay} game to use the clickSpace method of
+	* @param {boolean} isCurrentPlayer for whether all ship locations should be visible
+	* @param {boolean} preventClicking to restrict a player to click again
 	**/
-	render(table, game, isCurrentPlayer, isOver) {
+	render(table, game, isCurrentPlayer, preventClicking) {
 		table.innerHTML = ""; // Remove any existing cells
 
 		// Add letter row
@@ -60,9 +65,14 @@ class Board {
 				if (isCurrentPlayer && cell.hasShip) td.classList.add("ship");
 				if (cell.isHit && !cell.hasShip) td.classList.add("miss");
 				if (cell.isHit && cell.hasShip) td.classList.add("hit");
-				if (!isOver) {
+				if (!preventClicking) {
 					// Each cell has its own event listenser that listens for clicks on itself
-					td.addEventListener("click", e => game.clickSpace(cell, isCurrentPlayer)); 
+					let isVertical = false;
+					document.addEventListener('keydown', (event) => {
+						const key = event.code;
+						if (key == "Space" ) isVertical = true;
+					});
+					td.addEventListener('click', e => game.clickSpace(cell, isCurrentPlayer, isVertical));
 				}
 				tr.appendChild(td);
 			}
@@ -70,8 +80,16 @@ class Board {
 		}
 	}
 	
+	// TODO: Validate coordinates are within bounds of board
+	/**
+	* @description Creates a new Ship object and updates this.ships and this.spaces accordingly
+	* @param {number} length How many spaces long the ship should be
+	* @param {number} row The row coordinate of the top end of the ship
+	* @param {number} col The col coordinate of the left end of the ship
+	* @param {boolean} isVertical Direction of ship (false = horizontal)
+	**/
 	placeShip(length, row, col, isVertical) {
-		if ((row>=0 && row<this.rows) && (col>=0 && col<this.cols)) {
+		if (this.checkBoundaries(length, row, col, isVertical)) {
 			let ship = new Ship(length, row, col, isVertical);
 			this.ships.push(ship);
 			this.shipSpaces = this.shipSpaces + length;
@@ -79,12 +97,37 @@ class Board {
 			for (let coord of coords) {
 				this.cells[coord[0]][coord[1]].hasShip = true;
 			}
+			return(true);
+
 		} else {
 			alert ("Ship out of board. Try again"); //Make this better
+			return(false);
 		}
 
 	}
 
+	checkBoundaries(length, row, col, isVertical) {
+		if (length>1) {
+			if (isVertical) {
+				for (let i = 1; i < length; i++) {
+					if (row+i >= this.rows) return(false);
+				}
+				return(true);
+			} else {
+				for (let i = 1; i < length; i++) {
+					if (col+i >= this.cols) return(false);
+				}
+				return(true);
+			}
+		}
+		return (true);
+	}
+
+
+	/**
+	* @description Determines whether the game has been won on this board
+	* @return If all ship spaces on this board have been sunk
+	**/
 	checkWin() {
 		return (this.shipSpaces == 0);
 	}
