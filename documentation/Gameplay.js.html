@@ -37,11 +37,13 @@ class Gameplay {
 	* @param numShips {number} The number of ships each player has
 	**/
 	constructor(rows, cols, numShip) {
-		/**
+		/*
 		 * @member turn {boolean} Which player's turn it is - false is board0 (left) and true is board1 (right)
 		 * @member isSetup {boolean} Whether the ship placement phase of gameplay has been completed
 		 * @member board0 {Board} Player false's board
 		 * @member board1 {Board} Player true's board
+		 * @member numShipsPlaced {number} How many ships the current player has placed so far during setup
+		 * @member isVertical {boolean} Whether the ship is vertical or horizontal during ship placement
 		 */
 		this.rows = rows;
 		this.cols = cols;
@@ -49,37 +51,50 @@ class Gameplay {
 
 		this.turn = false;
 		this.isSetup = false;
-		this.placedshipcount = 1;
+		this.numShipsPlaced = 0;
 
 		this.board0 = new Board(rows, cols, this.numShips);
 		this.board1 = new Board(rows, cols, this.numShips);
-		this.focusedboard = this.board0;
 		this.renderBoards(false);
+		
+		this.isVertical = false;
+		for (let radio of document.getElementsByName("dir")) {
+			radio.addEventListener("change", e => {
+				if (e.target.checked) this.isVertical = e.target.value == "true";
+			});
+		}
+		
+		this.msg(this.playerName(this.turn) + " place your " + this.numShips + " ship");
 
 		document.getElementById("switch-turn").addEventListener("click", e => {
 			if (this.isSetup) {
+				this.msg("Switching turn...");
 				this.blankBoards();
+				document.getElementById("switch-turn").style.display = "none";
 				let modal = document.getElementById("modal");
-				modal.style.display = "block"
+				modal.style.display = "block";
 				let time = 5;
+				document.getElementById("turn-switch-time").innerText = time;
 				this.turnTimer = setInterval(() => {
-					// FIX: Displays 0
-					// TODO: Implement this button in a much better way
-					document.getElementById("modal-content").innerHTML = "Next turn in " + time + " seconds!&lt;br>&lt;input type='button' value='Switch now' onclick='window.executive.game.switchTurns()'>";
 					time--;
-					if (time &lt; 0) this.switchTurns();
+					document.getElementById("turn-switch-time").innerText = time;
+					if (time &lt;= 0) this.switchTurns();
 				}, 1000);
 			}
-			else {
-				this.placedshipcount = 1;
-				this.focusedboard = this.board1;
-				if (!this.turn) {
-					this.turn = true;
-				}
+			else { // Switch to second player placing their ships
+				this.numShipsPlaced = 0;
+				this.turn = true;
 				document.getElementById("switch-turn").style.display = "none";
+				document.getElementById("dir-container").style.display = "";
 				this.renderBoards(false);
+				this.msg(this.playerName(this.turn) + " place your " + this.numShips + " ship");
 			}
 		});
+		
+		document.getElementById("switch-now").addEventListener("click", e => this.switchTurns());
+		
+		// Future enhancement: Reset the game properly so player names can be kept
+		document.getElementById("play-again").addEventListener("click", e => window.location.reload());
 	}
 
 	/**
@@ -90,6 +105,7 @@ class Gameplay {
 		this.turn = !this.turn;
 		this.renderBoards(false);
 		clearInterval(this.turnTimer);
+		this.msg("It's " + this.playerName(this.turn) + "'s turn. Attack a space on " + this.playerName(!this.turn) + "'s board.");
 	}
 
 	/**
@@ -98,7 +114,6 @@ class Gameplay {
 	blankBoards() {
 		this.board0.render(document.getElementById("board0"), this, false, true);
 		this.board1.render(document.getElementById("board1"), this, false, true);
-
 	}
 
 	/**
@@ -114,30 +129,30 @@ class Gameplay {
 	* @description Render the boards, showing ships on both boards, and display a victory message
 	**/
 	gameEnd() {
-		document.getElementById('message').innerHTML="YOU WIN!!!";
+		this.msg(this.playerName(this.turn) + " wins!!!");
 		this.board0.render(document.getElementById("board0"), this, true, true);
 		this.board1.render(document.getElementById("board1"), this, true, true);
-		
-		document.getElementById("switch-turn").disabled = true;
+		document.getElementById("switch-turn").style.display = "none";
+		document.getElementById("play-again").style.display = "";
 	}
+	
 	/**
 	* @description Handles a space being clicked on either board
 	* @param {Space} cell The Space object that was clicked
 	* @param {boolean} isCurrentPlayer Whether the board that was clicked belongs to the player whose turn it currently is
-	* @param {boolean} isVertical Whether the ship is vertical or horizontal during ship placement
 	**/
-	clickSpace(cell, isCurrentPlayer, isVertical) {
+	clickSpace(cell, isCurrentPlayer) {
 		if (this.isSetup) {
 			if (!isCurrentPlayer &amp;&amp; !cell.isHit) {
 				cell.isHit = true;
 				if (cell.hasShip) {
 					let board = this.turn ? this.board0 : this.board1;
-					document.getElementById('message').innerHTML="Hit!";
+					this.msg("Hit!");
 					board.shipSpaces--;
 					if (board.checkWin()){
 						this.gameEnd();
 					} 
-					else{
+					else {
 						this.renderBoards(true);
 						document.getElementById("switch-turn").style.display = "";
 					}
@@ -145,44 +160,56 @@ class Gameplay {
 				else {
 					this.renderBoards(true);
 					document.getElementById("switch-turn").style.display = "";
-					document.getElementById('message').innerHTML=" Miss!";
+					this.msg("Miss.")
 				}
 			}
 		}
-		else {
-			this.newShip(cell, isVertical);
+		else if (isCurrentPlayer) { // During setup phase, you click your own board
+			this.newShip(cell);
 		}
 	}
 
 	/**
 	* @description Places a new ship on the current player's board
 	* @param cell {Space} The space the user clicked on, which will be the top/left end of the new ship
-	* @param {boolean} isVertical Whether the ship is vertical or horizontal
 	**/
-	newShip(cell, isVertical) {
-		if (this.placedshipcount &lt; this.numShips) {
-			if(!this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, isVertical)) this.renderBoards(false);
-			else {
-				this.renderBoards(false);
-				this.placedshipcount = this.placedshipcount + 1;
-			}
+	newShip(cell) {
+		let board = this.turn ? this.board1 : this.board0;
+		let shipLength = this.numShips - this.numShipsPlaced;
+		let placedShip = board.placeShip(shipLength, cell.row, cell.col, this.isVertical);
+		if (placedShip !== true) { // Failed to place ship in a valid location
+			this.msg(placedShip);
+			this.renderBoards(false);
 		}
-		else if (this.placedshipcount == this.numShips) {
-			if(!this.focusedboard.placeShip(this.placedshipcount, cell.row, cell.col, isVertical)) this.renderBoards(false);
-			else {
-				this.renderBoards(true);
-				document.getElementById("switch-turn").style.display = "";
-				if (this.board0.ships.length == this.board1.ships.length) {
-					this.isSetup = true;
-				}
-			}
+		else if (++this.numShipsPlaced &lt; this.numShips) { // Placed successfully and still more ships to place
+			this.msg(this.playerName(this.turn) + " place your " + (shipLength-1) + " ship");
+			this.renderBoards(false);
 		}
-		else {
-			document.getElementById("switch-turn").style.display = "";
+		else { // Last ship placed
+			this.msg("Ship placement complete");
 			this.renderBoards(true);
+			document.getElementById("dir-container").style.display = "none";
+			document.getElementById("switch-turn").style.display = "";
+			if (this.board0.ships.length == this.board1.ships.length) { // Both players have placed their ships
+				this.isSetup = true;
+			}
 		}
 	}
 
+	/**
+	* @description Display a message to the current player
+	**/
+	msg(message) {
+		document.getElementById("message").innerHTML = message;
+	}
+	
+	/**
+	* @param player {boolean} Which player to get the name of
+	* @return {string} The name of the specified player
+	**/
+	playerName(player) {
+		return document.getElementById("player" + (player ? "1" : "0") + "-name").value;
+	}
 }
 </code></pre>
         </article>
@@ -194,13 +221,13 @@ class Gameplay {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Board.html">Board</a></li><li><a href="Executive.html">Executive</a></li><li><a href="Gameplay.html">Gameplay</a></li><li><a href="Ship.html">Ship</a></li><li><a href="Space.html">Space</a></li></ul><h3>Global</h3><ul><li><a href="global.html#board1">board1</a></li><li><a href="global.html#cols">cols</a></li><li><a href="global.html#isHit">isHit</a></li><li><a href="global.html#shipSpaces">shipSpaces</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Board.html">Board</a></li><li><a href="Executive.html">Executive</a></li><li><a href="Gameplay.html">Gameplay</a></li><li><a href="Ship.html">Ship</a></li><li><a href="Space.html">Space</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.5</a> on Sun Sep 13 2020 23:28:20 GMT-0500 (Central Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.5</a> on Sun Sep 13 2020 23:51:30 GMT-0500 (Central Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>

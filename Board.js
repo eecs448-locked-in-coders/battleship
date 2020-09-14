@@ -9,7 +9,7 @@ class Board {
 	* @param {number} numShip Number of ships in the current board
 	*/
 	constructor(rows, cols, numShip) {
-		/**
+		/*
 		* @member {array} ships Array of ships in the current board
 		* @member {array} cells 2D array of cell containing space objects
 		* @member {number} shipSpaces of spaces/cells that are occupied by a ship
