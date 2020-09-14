@@ -34,14 +34,13 @@ class Gameplay {
 			if (this.isSetup) {
 				this.blankBoards();
 				let modal = document.getElementById("modal");
-				modal.style.display = "block"
+				modal.style.display = "block";
 				let time = 5;
+				document.getElementById("modal-text").innerText = "Next turn in " + time + " seconds!";
 				this.turnTimer = setInterval(() => {
-					// FIX: Displays 0
-					// TODO: Implement this button in a much better way
-					document.getElementById("modal-content").innerHTML = "Next turn in " + time + " seconds!<br><input type='button' value='Switch now' onclick='window.executive.game.switchTurns()'>";
 					time--;
-					if (time < 0) this.switchTurns();
+					document.getElementById("modal-text").innerText = "Next turn in " + time + " seconds!";
+					if (time <= 0) this.switchTurns();
 				}, 1000);
 			}
 			else {
@@ -54,6 +53,8 @@ class Gameplay {
 				this.renderBoards(false);
 			}
 		});
+		
+		document.getElementById("switch-now").addEventListener("click", e => this.switchTurns());
 	}
 
 	/**
@@ -123,7 +124,7 @@ class Gameplay {
 				}
 			}
 		}
-		else {
+		else if (isCurrentPlayer) { // During setup phase, you click your own board
 			this.newShip(cell, isVertical);
 		}
 	}
