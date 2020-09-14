@@ -66,6 +66,9 @@ class Gameplay {
 		});
 		
 		document.getElementById("switch-now").addEventListener("click", e => this.switchTurns());
+		
+		// Future enhancement: Reset the game properly so player names can be kept
+		document.getElementById("play-again").addEventListener("click", e => window.location.reload());
 	}
 
 	/**
@@ -104,6 +107,7 @@ class Gameplay {
 		this.board0.render(document.getElementById("board0"), this, true, true);
 		this.board1.render(document.getElementById("board1"), this, true, true);
 		document.getElementById("switch-turn").style.display = "none";
+		document.getElementById("play-again").style.display = "";
 	}
 	
 	/**

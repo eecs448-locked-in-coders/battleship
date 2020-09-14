@@ -21,8 +21,8 @@
 			<p> Player 2:  <input type="text" id="player1-name-input"></p>
 			<p>Select number of ships:</p>
 			<p>
-				<input type="range" min="1" max="5" value="1" id="ship-slider">
-				<span id="num-ships">1</span>
+				<input type="range" min="1" max="5" value="5" id="ship-slider">
+				<span id="num-ships">5</span>
 			</p>
 			<input type="button" id="complete" value="Start">
 		</div>
@@ -48,6 +48,7 @@
 				<input type="radio" name="dir" id="horizontal" value="false" checked><label for="horizontal">Right</label>
 			</div>
 			<input type="button" id="switch-turn" value="Switch turn">
+			<input type="button" id="play-again" value="Play again" style="display:none">
 		</div>
 
 		<div id="modal" class="modal">
