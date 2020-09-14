@@ -42,7 +42,9 @@ class Gameplay {
 
 		document.getElementById("switch-turn").addEventListener("click", e => {
 			if (this.isSetup) {
+				this.msg("Switching turn...");
 				this.blankBoards();
+				document.getElementById("switch-turn").style.display = "none";
 				let modal = document.getElementById("modal");
 				modal.style.display = "block";
 				let time = 5;
@@ -74,6 +76,7 @@ class Gameplay {
 		this.turn = !this.turn;
 		this.renderBoards(false);
 		clearInterval(this.turnTimer);
+		this.msg("It's " + this.playerName(this.turn) + "'s turn. Attack a space on " + this.playerName(!this.turn) + "'s board.");
 	}
 
 	/**
