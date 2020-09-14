@@ -92,10 +92,10 @@ class Gameplay {
 	* @description Render the boards, showing ships on both boards, and display a victory message
 	**/
 	gameEnd() {
-		this.msg("YOU WIN!!!");
+		this.msg(this.playerName(this.turn) + " wins!!!");
 		this.board0.render(document.getElementById("board0"), this, true, true);
 		this.board1.render(document.getElementById("board1"), this, true, true);
-		document.getElementById("switch-turn").style.display = "";
+		document.getElementById("switch-turn").style.display = "none";
 	}
 	
 	/**
@@ -152,6 +152,7 @@ class Gameplay {
 			document.getElementById("switch-turn").style.display = "";
 			if (this.board0.ships.length == this.board1.ships.length) { // Both players have placed their ships
 				this.isSetup = true;
+				document.getElementById("dir-container").style.display = "none";
 			}
 		}
 	}
@@ -161,5 +162,13 @@ class Gameplay {
 	**/
 	msg(message) {
 		document.getElementById("message").innerHTML = message;
+	}
+	
+	/**
+	* @param player {boolean} Which player to get the name of
+	* @return {string} The name of the specified player
+	**/
+	playerName(player) {
+		return document.getElementById("player" + (player ? "1" : "0") + "-name").value;
 	}
 }
