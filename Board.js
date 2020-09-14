@@ -1,18 +1,19 @@
 /**
  * @class
- * @description Represents a single player's board, storing the status of each space and ship
- * @member {Ship[]]} ships Array of ships in the current board
- * @member {Space[][]} cells 2D array of cell containing space objects
- * @member {number} numShips of ships in the current board
- * @member {number} shipSpaces of spaces/cells that are occupied by a ship
  */
 class Board {
 	/**
-	* @description Initializes the 2D array of Space objects
+	* @description Represents a single player's board, storing the status of each space and ship as a 2-D array of Space objects.
 	* @param {number} rows The number of rows the board will have
 	* @param {number} cols The number of columns the board will have
-	**/
+	* @param {number} numShip Number of ships in the current board
+	*/
 	constructor(rows, cols, numShip) {
+		/**
+		* @member {array} ships Array of ships in the current board
+		* @member {array} cells 2D array of cell containing space objects
+		* @member {number} shipSpaces of spaces/cells that are occupied by a ship
+		*/
 		this.ships = [];
 		this.cells = [];
 		this.numShips = numShip;
@@ -137,6 +138,9 @@ class Board {
 		return (this.shipSpaces == 0);
 	}
 
+	/**
+	* @return Whether the given row, col coordinates intersect the ship
+	**/
 	isIntersecting(coords) {
 		for (let i=0; i<coords.length; i++)
 		{
