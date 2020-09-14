@@ -8,6 +8,7 @@
 * @member isSetup {boolean} Whether the ship placement phase of gameplay has been completed
 * @member board0 {Board} Player false's board
 * @member board1 {Board} Player true's board
+* @member numShipsPlaced {number} How many ships the current player has placed so far during setup
 * @member isVertical {boolean} Whether the ship is vertical or horizontal during ship placement
 **/
 class Gameplay {
@@ -24,7 +25,7 @@ class Gameplay {
 
 		this.turn = false;
 		this.isSetup = false;
-		this.placedshipcount = 1;
+		this.numShipsPlaced = 0;
 
 		this.board0 = new Board(rows, cols, this.numShips);
 		this.board1 = new Board(rows, cols, this.numShips);
@@ -36,6 +37,8 @@ class Gameplay {
 				if (e.target.checked) this.isVertical = e.target.value == "true";
 			});
 		}
+		
+		this.msg(this.playerName(this.turn) + " place your " + this.numShips + " ship");
 
 		document.getElementById("switch-turn").addEventListener("click", e => {
 			if (this.isSetup) {
@@ -51,10 +54,12 @@ class Gameplay {
 				}, 1000);
 			}
 			else { // Switch to second player placing their ships
-				this.placedshipcount = 1;
+				this.numShipsPlaced = 0;
 				this.turn = true;
 				document.getElementById("switch-turn").style.display = "none";
+				document.getElementById("dir-container").style.display = "";
 				this.renderBoards(false);
+				this.msg(this.playerName(this.turn) + " place your " + this.numShips + " ship");
 			}
 		});
 		
@@ -102,7 +107,6 @@ class Gameplay {
 	* @description Handles a space being clicked on either board
 	* @param {Space} cell The Space object that was clicked
 	* @param {boolean} isCurrentPlayer Whether the board that was clicked belongs to the player whose turn it currently is
-	
 	**/
 	clickSpace(cell, isCurrentPlayer) {
 		if (this.isSetup) {
@@ -138,21 +142,23 @@ class Gameplay {
 	**/
 	newShip(cell) {
 		let board = this.turn ? this.board1 : this.board0;
-		let placedShip = board.placeShip(this.placedshipcount, cell.row, cell.col, this.isVertical);
+		let shipLength = this.numShips - this.numShipsPlaced;
+		let placedShip = board.placeShip(shipLength, cell.row, cell.col, this.isVertical);
 		if (placedShip !== true) { // Failed to place ship in a valid location
 			this.msg(placedShip);
 			this.renderBoards(false);
 		}
-		else if (this.placedshipcount < this.numShips) { // Placed successfully and still more ships to place
-			this.placedshipcount++;
+		else if (++this.numShipsPlaced < this.numShips) { // Placed successfully and still more ships to place
+			this.msg(this.playerName(this.turn) + " place your " + (shipLength-1) + " ship");
 			this.renderBoards(false);
 		}
 		else { // Last ship placed
+			this.msg("Ship placement complete");
 			this.renderBoards(true);
+			document.getElementById("dir-container").style.display = "none";
 			document.getElementById("switch-turn").style.display = "";
 			if (this.board0.ships.length == this.board1.ships.length) { // Both players have placed their ships
 				this.isSetup = true;
-				document.getElementById("dir-container").style.display = "none";
 			}
 		}
 	}
